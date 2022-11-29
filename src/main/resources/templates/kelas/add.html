@@ -1,0 +1,88 @@
+<!-- Card Start  -->
+<form th:action="@{~/Kelas/save}" method="post">
+    <div class="card">
+        <div class="card-header bg-primary">
+            <h3 class="card-title">Add New Kelas</h3>
+        </div>
+
+    <div class="modal-body row">
+        <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="code">Code</label>
+                <input type="text" name="code" id="code" class="form-control" >
+            </div>
+
+            <div class="form-group">
+                <label for="hari">Hari</label>
+                <input th:type="text" name="hari" id="hari" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="jam_mulai">Jam Mulai</label>
+                <input th:type="time" name="jam_mulai" id="jam_mulai" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="jam_selesai">Jam Selesai</label>
+                <input th:type="time" name="jam_selesai" id="jam_selesai" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Ruang ID</label>
+                <select name="ruang.id" class="form-control">
+                    <option value=""></option>
+                    <option th:each="data : ${ruangList}" th:value="${data.id}" th:text="${data.name}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Mata Kuliah ID</label>
+                <select name="matakuliah.id" class="form-control">
+                    <option value=""></option>
+                    <option th:each="data : ${matakuliahList}" th:value="${data.id}" th:text="${data.name}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+                <label>Dosen ID</label>
+                <select name="dosen.id" class="form-control">
+                    <option value=""></option>
+                    <option th:each="data : ${dosenList}" th:value="${data.id}" th:text="${data.name}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status</label>
+                <input th:type="text" name="status" id="status" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="tahunAjaran">Tahun Ajaran</label>
+                <input th:type="text" name="tahunAjaran" id="tahunAjaran" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="semester">Semester</label>
+                <input th:type="text" name="semester" id="semester" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="quota">Quota</label>
+                <input th:type="text" name="quota" id="quota" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="bisaOnline">Bisa Online</label>
+                <input th:type="checkbox" name="bisaOnline" id="bisaOnline" class="form-control">
+            </div>
+        </div>
+    </div>
+
+        <div class="card-footer">
+        <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</form>
+
+<!-- Card End  -->

@@ -1,12 +1,11 @@
 package com.miniproject.krs.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.miniproject.krs.model.DosenModel;
 import org.springframework.beans.BeanUtils;
@@ -50,6 +49,10 @@ public class DosenEntity {
     
     @Column(name = "updated_by", length = 20)
     private String updatedBy;
+
+//    @OneToMany(mappedBy = "dosen", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true);
+//    private Set<KelasEntity> kelasS = new HashSet<>();
+
     //constructor
     public DosenEntity() {
 
@@ -73,5 +76,15 @@ public class DosenEntity {
         this.updatedAt = LocalDateTime.now();
         this.updatedBy = "SYSTEM";
     }
+
+//    public void addKelas(KelasEntity kelas){
+//        this.kelasS.add(kelas);
+//        kelas.setDosen(this);
+//    }
+//
+//    public void removeKelas(KelasEntity kelas){
+//        this.kelasS.remove(kelas);
+//        kelas.setDosen(null);
+//    }
 
 }

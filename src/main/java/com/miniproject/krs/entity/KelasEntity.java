@@ -6,6 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,7 +19,7 @@ public class KelasEntity {
     @Column(name = "id", length = 36)
     private String id;
 
-    @Column(name = "kode")
+    @Column(name = "kode_kelas", length = 20, unique = true)
     private String code;
 
     @Column(name = "hari", length = 36)
@@ -28,29 +31,29 @@ public class KelasEntity {
     @Column(name = "jam_selesai")
     private Date jam_selesai;
 
-    @Column(name = "ruang_id")
+    @Column(name = "ruang_id", length = 36, insertable = false, updatable = false)
     private String ruangId;
 
-    @Column(name = "matakuliah_id")
+    @Column(name = "matakuliah_id", length = 36, insertable = false, updatable = false)
     private String matakuliahId;
 
-    @Column(name = "dosen_id")
+    @Column(name = "dosen_id", length = 36, insertable = false, updatable = false)
     private String dosenId;
 
-    @Column(name = "status")
+    @Column(name = "status", length = 255)
     private String status;
 
-    @Column(name = "tahun_ajaran")
-    private String tahunAjaran;
+    @Column(name = "tahun_ajaran", length = 36)
+    private Integer tahunAjaran;
 
-    @Column(name = "semester")
+    @Column(name = "semester", length = 36)
     private String semester;
 
-    @Column(name = "quota")
-    private String quota;
+    @Column(name = "quota", length = 36)
+    private Integer quota;
 
     @Column(name = "bisa_online")
-    private String bisaOnline;
+    private Boolean bisaOnline;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -63,4 +66,31 @@ public class KelasEntity {
 
     @Column(name = "updated_by", length = 20)
     private String updatedBy;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "dosen_id", nullable = false)
+    private DosenEntity dosen;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "matakuliah_id", nullable = false)
+    private MataKuliahEntity mataKuliah;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ruang_id", nullable = false)
+    private RuangEntity ruang;
+
+    //constructor
+    public KelasEntity(){
+
+    }
+    public KelasEntity(String id){
+        this.id = id;
+    }
+
+    @PrePersist
+    public void onCreated(){
+        this.id = UUID.randomUUID().toString();
+    }
+
+
 }

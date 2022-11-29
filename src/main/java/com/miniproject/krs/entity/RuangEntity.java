@@ -1,9 +1,12 @@
 package com.miniproject.krs.entity;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.*;
 
+
+import com.miniproject.krs.model.RuangModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +28,7 @@ public class RuangEntity {
     @Column(name = "gedung_id", length = 36, insertable = false, updatable = false)
     private String gedungId;
 
-    @Column(name = "lantai_ke")
+    @Column(name = "lantai_ke", length = 36)
     private String lantaiKe;
 
     @Column(name = "created_at")
@@ -51,5 +54,30 @@ public class RuangEntity {
 
     public RuangEntity(String id) {
         this.id = id;
+    }
+
+    public RuangEntity(String code, String name){
+        this.code = code;
+        this.name = name;
+    }
+    public RuangEntity(RuangModel model){
+        this.id = UUID.randomUUID().toString();
+        this.code = model.getCode();
+        this.name = model.getName();
+
+        if (model.getGedung() != null){
+            GedungEntity gedungEntity = new GedungEntity();
+            gedungEntity.setId(model.getGedung().getId());
+            this.gedung = gedungEntity;
+        }
+        this.lantaiKe = model.getLantaiKe();
+        this.createdAt=LocalDateTime.now();
+        this.createdBy="SYSTEM";
+        this.updatedAt=LocalDateTime.now();
+        this.updatedBy="SYSTEM";
+    }
+    @PrePersist
+    public void onCreated(){
+        this.id = UUID.randomUUID().toString();
     }
 }

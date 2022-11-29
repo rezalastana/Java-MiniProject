@@ -1,61 +1,31 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}">
-<head>
-    <meta charset="UTF-8" />
-    <title>Edit Gedung</title>
-</head>
-<body>
-<!-- Breadcrumb -->
-<div class="row mb-2" layout:fragment="breadcrumb">
-    <div class="col-sm-6">
-        <h1 class="m-0">Gedung</h1>
-    </div><!-- /.col -->
-    <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a th:href="@{~/}">Home</a></li>
-            <li class="breadcrumb-item"><a th:href="@{~/gedung}">Gedung</a></li>
-            <li class="breadcrumb-item active">Edit Gedung</li>
-        </ol>
-    </div><!-- /.col -->
-</div><!-- /.row -->
-<!-- Breadcrumb End -->
+<!-- Card Start  -->
+<form th:action="@{~/gedung/update}" method="post">
+    <input type="hidden" name="id" th:value="${data.id}">
+    <div class="card">
+        <div class="card-header bg-warning">
+            <h3 class="card-title">Edit Gedung</h3>
+        </div>
 
-<!-- Main Start-->
-<div class="row" layout:fragment="content">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        <!-- Card Start  -->
-        <form th:action="@{~/gedung/update}" method="post">
-            <input type="hidden" name="id" th:value="${data.id}">
-            <div class="card">
-                <div class="card-header bg-warning">
-                    <h3 class="card-title">Edit Gedung</h3>
-                </div>
-
-                <div class="card-body">
-                    <div class="form-group">
-                        <label>Code</label>
-                        <input type="text" name="code" class="form-control" th:value="${data.code}">
-                    </div>
-
-                    <div class="form-group">
-                        <label >Nama Gedung</label>
-                        <input th:type="text" name="name" class="form-control" th:value="${data.name}">
-                    </div>
-
-                    <div class="form-group">
-                        <label >Jumlah Lantai</label>
-                        <input th:type="text" name="jmlLantai" class="form-control" th:value="${data.jmlLantai}">
-                    </div>
-                </div>
-
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-success">Update</button>
-                </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>Code</label>
+                <input type="text" name="code" class="form-control" th:value="${data.code}">
             </div>
-        </form>
-        <!-- Card End  -->
+
+            <div class="form-group">
+                <label >Nama Gedung</label>
+                <input th:type="text" name="name" class="form-control" th:value="${data.name}">
+            </div>
+
+            <div class="form-group">
+                <label >Jumlah Lantai</label>
+                <input th:type="text" name="jmlLantai" class="form-control" th:value="${data.jmlLantai}">
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">Update</button>
+        </div>
     </div>
-</div>
-<!-- Main End -->
-</body>
-</html>
+</form>
+<!-- Card End  -->
