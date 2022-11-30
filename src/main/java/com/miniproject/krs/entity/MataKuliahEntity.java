@@ -1,6 +1,8 @@
 package com.miniproject.krs.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.*;
 
@@ -40,8 +42,16 @@ public class MataKuliahEntity {
     @Column(name = "updated_by", length = 20)
     private String updatedBy;
 
+    @OneToMany(mappedBy = "mataKuliah", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<KelasEntity> kelas = new HashSet<>();
+
+
     public MataKuliahEntity() {
         
+    }
+
+    public MataKuliahEntity(String id){
+        this.id = id;
     }
     public MataKuliahEntity(MataKuliahModel model) {
         BeanUtils.copyProperties(model, this);

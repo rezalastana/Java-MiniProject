@@ -79,6 +79,5 @@ public class MahasiswaEntity {
         this.updatedAt = LocalDateTime.now();
         this.updatedBy = "SYSTEM";
 
-
     }
 }

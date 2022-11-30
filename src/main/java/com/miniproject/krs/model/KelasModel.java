@@ -5,22 +5,24 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class KelasModel {
     private String id;
     private String code;
     private String hari;
-    private String jam_mulai;
-    private String jam_selesai;
+    private Date jam_mulai;
+    private Date jam_selesai;
     private String ruangId;
     private String matakuliahId;
     private String dosenId;
     private String status;
-    private String tahunAjaran;
+    private Integer tahunAjaran;
     private String semester;
-    private String quota;
-    private String bisaOnline;
+    private Integer quota;
+    private Boolean bisaOnline;
 
     private RuangModel ruang;
     private MataKuliahModel matkul;

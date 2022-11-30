@@ -1,6 +1,8 @@
 package com.miniproject.krs.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.*;
@@ -47,6 +49,8 @@ public class RuangEntity {
     @JoinColumn(name = "gedung_id", nullable = false)
     private GedungEntity gedung;
 
+    @OneToMany(mappedBy = "ruang", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<KelasEntity> kelas = new HashSet<>();
     //constructor
     public RuangEntity(){
 

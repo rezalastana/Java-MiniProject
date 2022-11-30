@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.*;
-
 import com.miniproject.krs.model.DosenModel;
 import org.springframework.beans.BeanUtils;
 
@@ -50,8 +49,8 @@ public class DosenEntity {
     @Column(name = "updated_by", length = 20)
     private String updatedBy;
 
-//    @OneToMany(mappedBy = "dosen", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true);
-//    private Set<KelasEntity> kelasS = new HashSet<>();
+    @OneToMany(mappedBy = "dosen", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<KelasEntity> kelas = new HashSet<>();
 
     //constructor
     public DosenEntity() {
@@ -77,8 +76,10 @@ public class DosenEntity {
         this.updatedBy = "SYSTEM";
     }
 
+
+
 //    public void addKelas(KelasEntity kelas){
-//        this.kelasS.add(kelas);
+//        this.kelas.add(kelas);
 //        kelas.setDosen(this);
 //    }
 //

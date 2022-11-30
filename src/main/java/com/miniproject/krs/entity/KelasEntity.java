@@ -1,13 +1,13 @@
 package com.miniproject.krs.entity;
 
+import com.miniproject.krs.model.KelasModel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -87,6 +87,15 @@ public class KelasEntity {
         this.id = id;
     }
 
+    public KelasEntity(KelasModel model){
+        this.id = UUID.randomUUID().toString();
+        BeanUtils.copyProperties(model, this);
+        this.createdAt = LocalDateTime.now();
+        this.createdBy = "SYSTEM";
+        this.updatedAt = LocalDateTime.now();
+        this.updatedBy = "SYSTEM";
+
+    }
     @PrePersist
     public void onCreated(){
         this.id = UUID.randomUUID().toString();

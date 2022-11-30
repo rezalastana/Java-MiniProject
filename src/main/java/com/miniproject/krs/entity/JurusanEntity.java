@@ -55,6 +55,7 @@ public class JurusanEntity {
         this.code = model.getCode();
         this.name = model.getName();
 
+        //validasi
         if (model.getFakultas() != null){
             FakultasEntity fakultasEntity = new FakultasEntity();
             fakultasEntity.setId(model.getFakultas().getId());
