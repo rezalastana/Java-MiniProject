@@ -34,15 +34,14 @@ public class MataKuliahController {
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute MataKuliahModel request, RedirectAttributes redirectAttributes){
+    public ModelAndView save(@ModelAttribute MataKuliahModel request){
         this.service.save(request);
-        redirectAttributes.addFlashAttribute("success", "Data has been successfully saved!");
         return new ModelAndView("redirect:/matakuliah");
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") String id){
-        MataKuliahModel matakuliah = this.service.getById(id);
+        MataKuliahModel matakuliah = service.getById(id);
         if (matakuliah == null){
             return new ModelAndView("redirect:/matakuliah");
         }

@@ -5,6 +5,7 @@ import com.miniproject.krs.entity.MataKuliahEntity;
 import com.miniproject.krs.model.MataKuliahModel;
 import com.miniproject.krs.repository.MataKuliahRepo;
 import com.miniproject.krs.service.MataKuliahService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,20 +27,12 @@ public class MataKuliahServiceImpl implements MataKuliahService {
 
     @Override
     public List<MataKuliahModel> getAll() {
-        List<MataKuliahEntity> result = this.repo.findAll();
-        if (result.isEmpty()){
-            Collections.emptyList();
-        }
-        return result.stream().map(MataKuliahModel::new).collect(Collectors.toList());
+        return this.repo.findAll().stream().map(MataKuliahModel::new).collect(Collectors.toList());
     }
 
     @Override
     public MataKuliahModel getById(String id) {
-        if (id == null || id.isBlank() || id.isEmpty()){
-            return new MataKuliahModel();
-        }
-        Optional<MataKuliahEntity> result = repo.findById(id);
-        return result.map(MataKuliahModel::new).orElseGet(MataKuliahModel::new);
+        return this.repo.findById(id).map(MataKuliahModel::new).orElse(new MataKuliahModel());
     }
 
     @Override
@@ -63,9 +56,8 @@ public class MataKuliahServiceImpl implements MataKuliahService {
             return Optional.empty();
         }
         MataKuliahEntity request = result.get();
-        request.setCode(data.getCode());
-        request.setName(data.getName());
-        request.setSks(data.getSks());
+        BeanUtils.copyProperties(data, request);
+        data.setId(id);
 
         try {
             this.repo.save(request);

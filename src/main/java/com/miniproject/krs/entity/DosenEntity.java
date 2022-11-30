@@ -56,6 +56,9 @@ public class DosenEntity {
     public DosenEntity() {
 
     }
+    public DosenEntity(String id){
+        this.id = id;
+    }
     public DosenEntity(String nip, String name, String jk, String alamat, String gelar){
         this.nip = nip;
         this.name = name;
