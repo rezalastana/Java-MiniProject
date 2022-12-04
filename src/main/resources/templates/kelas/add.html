@@ -37,7 +37,7 @@
 
             <div class="form-group">
                 <label>Mata Kuliah ID</label>
-                <select name="matakuliah.id" class="form-control">
+                <select name="mataKuliah.id" class="form-control">
                     <option value=""></option>
                     <option th:each="data : ${matakuliahList}" th:value="${data.id}" th:text="${data.name}"></option>
                 </select>

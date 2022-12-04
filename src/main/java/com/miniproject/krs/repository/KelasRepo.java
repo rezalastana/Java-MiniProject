@@ -11,9 +11,27 @@ import java.util.List;
 
 @Repository
 public interface KelasRepo extends JpaRepository<KelasEntity, String> {
-//    @Query("select t from KelasEntity t where t.ruangId= : ruangId and t.hari= :hari and t.jam_mulai >= :jam_mulai and t.jam_selesai <= :jam_selesai")
-//    List<KelasEntity> checkCase01(@Param("ruangId") String ruangId,
-//                                  @Param("namaHari")String hari,
-//                                  @Param("jamMulai") Date jam_mulai,
-//                                  @Param("jamSelesai") Date jam_selesai);
+    //validasi ruang, hari, jam mulai, jam selesai
+    @Query("SELECT t FROM KelasEntity t WHERE  t.hari= :hari AND t.ruangId= :ruangId AND t.dosenId= :dosenId AND t.jam_mulai>= :jam_mulai OR t.jam_selesai<= :jam_selesai")
+    List<KelasEntity> validation1(
+            @Param("hari") String hari,
+            @Param("ruangId") String ruangId,
+            @Param("dosenId") String dosenId,
+            @Param("jam_mulai") Date jam_mulai,
+            @Param("jam_selesai") Date jam_selesai
+    );
+
+    //validasi dimana hari, ruang, dosen sudah ada dan jam mulai>= dan jam_selesai<=
+    @Query("SELECT t FROM KelasEntity t WHERE t.hari= :hari AND t.ruangId= :ruangId AND t.dosenId= :dosenId AND (t.jam_mulai>= :jam_mulai OR t.jam_selesai<= :jam_selesai)")
+    List<KelasEntity> validation2(
+            @Param("hari") String hari,
+            @Param("ruangId") String ruangId,
+            @Param("dosenId") String dosenId,
+            @Param("jam_mulai") Date jam_mulai,
+            @Param("jam_selesai") Date jam_selesai
+    );
+
+
+
+
 }

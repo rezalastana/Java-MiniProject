@@ -45,7 +45,6 @@ public class DbInit implements CommandLineRunner {
             fakultas2.addJurusan(new JurusanEntity("KJ", "Kedokteran Jiwa"));
             fakultas2.addJurusan(new JurusanEntity("KH", "Kedokteran Hewan"));
             fakultas2.addJurusan(new JurusanEntity("KC", "Kedokteran Cinta"));
-
             this.fakultasRepo.save(fakultas2);
         }
     }

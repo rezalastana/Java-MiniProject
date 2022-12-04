@@ -4,6 +4,7 @@ import com.miniproject.krs.entity.FakultasEntity;
 import com.miniproject.krs.model.FakultasModel;
 import com.miniproject.krs.repository.FakultasRepo;
 import com.miniproject.krs.service.FakultasService;
+import groovy.util.logging.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class FakultasServiceImpl implements FakultasService {
     private FakultasRepo repository;
@@ -27,6 +29,9 @@ public class FakultasServiceImpl implements FakultasService {
 
     @Override
     public FakultasModel getById(String id) {
+        if (id == null || id.isEmpty() || id.isBlank()){
+            return new FakultasModel();
+        }
         return this.repository.findById(id).map(FakultasModel::new).orElse(new FakultasModel());
     }
 

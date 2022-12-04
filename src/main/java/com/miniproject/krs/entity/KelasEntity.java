@@ -1,7 +1,10 @@
 package com.miniproject.krs.entity;
 
 import com.miniproject.krs.model.KelasModel;
+import com.miniproject.krs.util.DateUtil;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
@@ -14,6 +17,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "kelas_tab")
+@AllArgsConstructor
 public class KelasEntity {
     @Id
     @Column(name = "id", length = 36)
@@ -25,9 +29,11 @@ public class KelasEntity {
     @Column(name = "hari", length = 36)
     private String hari;
 
+    @Temporal(TemporalType.TIME)
     @Column(name = "jam_mulai")
     private Date jam_mulai;
 
+    @Temporal(TemporalType.TIME)
     @Column(name = "jam_selesai")
     private Date jam_selesai;
 
@@ -90,12 +96,43 @@ public class KelasEntity {
     public KelasEntity(KelasModel model){
         this.id = UUID.randomUUID().toString();
         BeanUtils.copyProperties(model, this);
+
+        if (model.getRuang() != null) {
+            RuangEntity ruangEntity = new RuangEntity();
+            ruangEntity.setId(model.getRuang().getId());
+            this.ruang = ruangEntity;
+        }
+
+        if (model.getMataKuliah() != null){
+            MataKuliahEntity mataKuliahEntity = new MataKuliahEntity();
+            mataKuliahEntity.setId(model.getMataKuliah().getId());
+            this.mataKuliah = mataKuliahEntity;
+        }
+
+        if (model.getDosen() != null) {
+            DosenEntity dosenEntity = new DosenEntity();
+            dosenEntity.setId(model.getDosen().getId());
+            this.dosen = dosenEntity;
+        }
+
         this.createdAt = LocalDateTime.now();
         this.createdBy = "SYSTEM";
         this.updatedAt = LocalDateTime.now();
         this.updatedBy = "SYSTEM";
 
     }
+
+    public KelasEntity(String code, String hari, String jam_mulai, String jam_selesai, String ruangId, String matakuliahId, String dosenId){
+        this.id = UUID.randomUUID().toString();
+        this.code = code;
+        this.hari = hari;
+        this.jam_mulai = DateUtil.getTime(jam_mulai);
+        this.jam_selesai = DateUtil.getTime(jam_selesai);
+        this.ruangId = ruangId;
+        this.matakuliahId = matakuliahId;
+        this.dosenId = dosenId;
+    }
+
     @PrePersist
     public void onCreated(){
         this.id = UUID.randomUUID().toString();

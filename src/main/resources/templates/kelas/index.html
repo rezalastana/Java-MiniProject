@@ -52,8 +52,7 @@
             <tr>
                 <td>Kode</td>
                 <td>Hari</td>
-                <td>Jam Mulai</td>
-                <td>Jam Selesai</td>
+                <td>Jam</td>
                 <td>Ruang</td>
                 <td>Matakuliah</td>
                 <td>Dosen </td>
@@ -69,11 +68,10 @@
             <tr th:each="data : ${dataList}">
                 <td th:text="${data.code}"></td>
                 <td th:text="${data.hari}"></td>
-                <td th:text="${data.jam_mulai}"></td>
-                <td th:text="${data.jam_selesai}"></td>
-                <td th:text="${data.ruang.id}"></td>
-                <td th:text="${data.matakuliah.id}"></td>
-                <td th:text="${data.dosen.id}"></td>
+                <td th:text="${{data.jam_mulai + '-' +data.jam_selesai}}"></td>
+                <td th:text="${data.ruang.name}"></td>
+                <td th:text="${data.mataKuliah.name}"></td>
+                <td th:text="${data.dosen.name}"></td>
                 <td th:text="${data.status}"></td>
                 <td th:text="${data.tahunAjaran}"></td>
                 <td th:text="${data.semester}"></td>

@@ -22,6 +22,5 @@ public class MataKuliahModel {
 
     public MataKuliahModel(MataKuliahEntity entity){
         BeanUtils.copyProperties(entity, this);
-        this.id = UUID.randomUUID().toString();
     }
 }

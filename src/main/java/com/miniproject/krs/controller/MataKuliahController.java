@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class MataKuliahController {
 
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") String id){
-        MataKuliahModel matakuliah = service.getById(id);
+        MataKuliahModel matakuliah = this.service.getById(id);
         if (matakuliah == null){
             return new ModelAndView("redirect:/matakuliah");
         }

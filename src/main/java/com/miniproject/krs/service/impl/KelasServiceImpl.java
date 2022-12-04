@@ -1,20 +1,20 @@
 package com.miniproject.krs.service.impl;
 
-import com.miniproject.krs.entity.DosenEntity;
-import com.miniproject.krs.entity.KelasEntity;
-import com.miniproject.krs.entity.MataKuliahEntity;
-import com.miniproject.krs.entity.RuangEntity;
+import com.miniproject.krs.entity.*;
 import com.miniproject.krs.model.KelasModel;
 import com.miniproject.krs.repository.KelasRepo;
 import com.miniproject.krs.service.KelasService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class KelasServiceImpl implements KelasService {
     private KelasRepo repo;
 
@@ -25,7 +25,11 @@ public class KelasServiceImpl implements KelasService {
 
     @Override
     public List<KelasModel> getAll() {
-        return this.repo.findAll().stream().map(KelasModel::new).collect(Collectors.toList());
+        List<KelasEntity> result = this.repo.findAll();
+        if (result.isEmpty()){
+            Collections.emptyList();
+        }
+        return result.stream().map(KelasModel::new).collect(Collectors.toList());
     }
 
     @Override
@@ -40,9 +44,29 @@ public class KelasServiceImpl implements KelasService {
 
     @Override
     public Optional<KelasModel> save(KelasModel data) {
-        if (data == null){
+        if (data == null)
+            return Optional.empty();
+
+        List<KelasEntity> check01 = this.repo.validation1(
+                data.getHari(),
+                data.getRuangId(),
+                data.getDosenId(),
+                data.getJam_mulai(),
+                data.getJam_selesai()
+        );
+
+        List<KelasEntity> check02 = this.repo.validation2(
+                data.getHari(),
+                data.getRuangId(),
+                data.getDosenId(),
+                data.getJam_mulai(),
+                data.getJam_selesai()
+        );
+
+        if (!check01.isEmpty() || !check02.isEmpty() ){
             return Optional.empty();
         }
+
         KelasEntity result = new KelasEntity(data);
         try {
             this.repo.save(result);
@@ -89,6 +113,7 @@ public class KelasServiceImpl implements KelasService {
         }
         try {
             KelasEntity data = result.get();
+
             this.repo.delete(data);
             return Optional.of(new KelasModel(data));
         } catch (Exception e){

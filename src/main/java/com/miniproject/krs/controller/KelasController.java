@@ -43,12 +43,18 @@ public class KelasController {
     public ModelAndView add(){
         ModelAndView view = new ModelAndView("kelas/add.html");
         List<RuangModel> ruang = ruangService.getAll();
-        List<MataKuliahModel> matakuliah = mataKuliahService.getAll();
+        List<MataKuliahModel> mataKuliah = mataKuliahService.getAll();
         List<DosenModel> dosen = dosenService.getAll();
         view.addObject("ruangList", ruang);
-        view.addObject("matakuliahList", matakuliah);
+        view.addObject("matakuliahList", mataKuliah);
         view.addObject("dosenList", dosen);
         return view;
+    }
+
+    @PostMapping("/save")
+    public ModelAndView save(@ModelAttribute KelasModel request){
+        this.kelasService.save(request);
+        return new ModelAndView("redirect:/kelas");
     }
 
     @GetMapping("/edit{id}")
@@ -85,7 +91,7 @@ public class KelasController {
     public ModelAndView delete(@ModelAttribute KelasModel request){
         KelasModel kelas = kelasService.getById(request.getId());
         if (kelas == null){
-            return new ModelAndView("redirect:/jurusan");
+            return new ModelAndView("redirect:/kelas");
         }
         this.kelasService.delete(request.getId());
         return new ModelAndView("redirect:/kelas");

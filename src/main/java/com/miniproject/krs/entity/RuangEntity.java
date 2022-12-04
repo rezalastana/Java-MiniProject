@@ -80,6 +80,7 @@ public class RuangEntity {
         this.updatedAt=LocalDateTime.now();
         this.updatedBy="SYSTEM";
     }
+
     @PrePersist
     public void onCreated(){
         this.id = UUID.randomUUID().toString();

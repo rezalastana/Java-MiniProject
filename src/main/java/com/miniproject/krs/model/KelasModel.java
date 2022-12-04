@@ -23,7 +23,7 @@ public class KelasModel {
     @DateTimeFormat(pattern = "HH:mm")
     private Date jam_selesai;
     private String ruangId;
-    private String matakuliahId;
+    private String mataKuliahId;
     private String dosenId;
     private String status;
     private Integer tahunAjaran;
@@ -41,6 +41,20 @@ public class KelasModel {
 
     public KelasModel(KelasEntity entity){
         BeanUtils.copyProperties(entity, this);
+        if (entity.getRuang() != null){
+            ruangId = entity.getRuang().getId();
+            ruang = new RuangModel(entity.getRuang());
+        }
+
+        if (entity.getMataKuliah() != null){
+            mataKuliahId = entity.getMataKuliah().getId();
+            mataKuliah = new MataKuliahModel(entity.getMataKuliah());
+        }
+
+        if (entity.getDosen() != null){
+            dosenId = entity.getDosen().getId();
+            dosen = new DosenModel((entity.getDosen()));
+        }
     }
 
 }
