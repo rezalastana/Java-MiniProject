@@ -64,6 +64,12 @@ public class RuangEntity {
         this.code = code;
         this.name = name;
     }
+
+    public RuangEntity(String code, String name, String lantaiKe){
+        this.code = code;
+        this.name = name;
+        this.code = lantaiKe;
+    }
     public RuangEntity(RuangModel model){
         this.id = UUID.randomUUID().toString();
         this.code = model.getCode();

@@ -1,10 +1,12 @@
 package com.miniproject.krs.model;
 
 import com.miniproject.krs.entity.FakultasEntity;
+import com.miniproject.krs.entity.JurusanEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -28,5 +30,11 @@ public class FakultasModel {
     }
     public FakultasModel(FakultasEntity entity){
         BeanUtils.copyProperties(entity, this);
+        if (entity.getJurusans() != null || !entity.getJurusans().isEmpty()){
+            jurusanList = new ArrayList<>();
+            for (JurusanEntity jrs : entity.getJurusans()){
+                jurusanList.add(new JurusanModel(jrs));
+            }
+        }
     }
 }

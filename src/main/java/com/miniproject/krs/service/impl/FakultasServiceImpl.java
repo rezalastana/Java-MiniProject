@@ -4,7 +4,7 @@ import com.miniproject.krs.entity.FakultasEntity;
 import com.miniproject.krs.model.FakultasModel;
 import com.miniproject.krs.repository.FakultasRepo;
 import com.miniproject.krs.service.FakultasService;
-import groovy.util.logging.Slf4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +40,19 @@ public class FakultasServiceImpl implements FakultasService {
         if(data == null) {
             return Optional.empty();
         }
+
+        //check code
+        List<FakultasEntity> checkCode = this.repository.findByCode(data.getCode());
+        if (!checkCode.isEmpty()){
+            return Optional.empty();
+        }
+
+        //check name
+        List<FakultasEntity> checkName = this.repository.findByName(data.getName());
+        if (!checkName.isEmpty()){
+            return Optional.empty();
+        }
+
         FakultasEntity result= new FakultasEntity(data);
         try{
             // proses simpan data => table siswa
@@ -52,6 +65,10 @@ public class FakultasServiceImpl implements FakultasService {
 
     @Override
     public Optional<FakultasModel> update(String id, FakultasModel data) {
+        if (id == null || id.isBlank() || id.isEmpty()){
+            return Optional.empty();
+        }
+
         Optional<FakultasEntity> result = this.repository.findById(id);
         if (result.isEmpty()){
             return Optional.empty();
@@ -70,16 +87,26 @@ public class FakultasServiceImpl implements FakultasService {
 
     @Override
     public Optional<FakultasModel> delete(String id) {
-        Optional<FakultasEntity> result = this.repository.findById(id);
-        if (result.isEmpty()){
+//        Optional<FakultasEntity> fakultas = this.repository.findById(id);
+//        if (fakultas == null){
+//            return Optional.empty();
+//        }
+
+        //Bisa juga seperti ini
+        FakultasEntity fakultas = this.repository.findById(id).orElse(null);
+        if (fakultas == null){
             return Optional.empty();
         }
+
+        if (!fakultas.getJurusans().isEmpty()){
+            fakultas.getJurusans().clear();
+        }
+
         try {
-            FakultasEntity data = result.get();
-            this.repository.delete(data);
-            return Optional.of(new FakultasModel(data));
+            this.repository.save(fakultas);
         } catch (Exception e){
-            return Optional.empty();
+            log.info("Delete is failed, error {}", e.getMessage());
         }
+        return Optional.of(new FakultasModel(fakultas));
     }
 }

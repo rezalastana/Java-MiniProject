@@ -55,15 +55,15 @@ public class KelasServiceImpl implements KelasService {
                 data.getJam_selesai()
         );
 
-        List<KelasEntity> check02 = this.repo.validation2(
-                data.getHari(),
-                data.getRuangId(),
-                data.getDosenId(),
-                data.getJam_mulai(),
-                data.getJam_selesai()
-        );
+//        List<KelasEntity> check02 = this.repo.validation2(
+//                data.getHari(),
+//                data.getRuangId(),
+//                data.getDosenId(),
+//                data.getJam_mulai(),
+//                data.getJam_selesai()
+//        );
 
-        if (!check01.isEmpty() || !check02.isEmpty() ){
+        if (!check01.isEmpty()){
             return Optional.empty();
         }
 
