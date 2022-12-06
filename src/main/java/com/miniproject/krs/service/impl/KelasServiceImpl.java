@@ -55,15 +55,14 @@ public class KelasServiceImpl implements KelasService {
                 data.getJam_selesai()
         );
 
-//        List<KelasEntity> check02 = this.repo.validation2(
-//                data.getHari(),
-//                data.getRuangId(),
-//                data.getDosenId(),
-//                data.getJam_mulai(),
-//                data.getJam_selesai()
-//        );
+        List<KelasEntity> check02 = this.repo.validation3(
+                data.getHari(),
+                data.getRuangId(),
+                data.getJam_mulai(),
+                data.getJam_selesai()
+        );
 
-        if (!check01.isEmpty()){
+        if (check01.size()>0 || check02.size()>0){
             return Optional.empty();
         }
 
@@ -113,7 +112,15 @@ public class KelasServiceImpl implements KelasService {
         }
         try {
             KelasEntity data = result.get();
-
+            RuangEntity ruang = data.getRuang();
+            ruang.removeRuang(data);
+            data.setRuang(null);
+            DosenEntity dosen = data.getDosen();
+            dosen.removeDosen(data);
+            data.setDosen(null);
+            MataKuliahEntity mataKuliah = data.getMataKuliah();
+            mataKuliah.removeMataKuliah(data);
+            data.setMataKuliah(null);
             this.repo.delete(data);
             return Optional.of(new KelasModel(data));
         } catch (Exception e){

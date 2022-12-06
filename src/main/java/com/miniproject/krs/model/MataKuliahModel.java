@@ -1,7 +1,5 @@
 package com.miniproject.krs.model;
 
-import java.util.UUID;
-
 import com.miniproject.krs.entity.MataKuliahEntity;
 import lombok.Getter;
 import lombok.Setter;

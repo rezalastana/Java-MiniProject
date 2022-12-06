@@ -87,6 +87,11 @@ public class RuangEntity {
         this.updatedBy="SYSTEM";
     }
 
+    public void removeRuang(KelasEntity kelas){
+        this.kelas.remove(kelas);
+        kelas.setRuang(null);
+    }
+
     @PrePersist
     public void onCreated(){
         this.id = UUID.randomUUID().toString();

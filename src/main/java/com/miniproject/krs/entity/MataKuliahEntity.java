@@ -63,6 +63,11 @@ public class MataKuliahEntity {
         this.updatedBy = "SYSTEM";
     }
 
+    public void removeMataKuliah(KelasEntity kelas){
+        this.kelas.remove(kelas);
+        kelas.setMataKuliah(null);
+    }
+
     @PrePersist
     public void onCreated() {
         this.id = UUID.randomUUID().toString();

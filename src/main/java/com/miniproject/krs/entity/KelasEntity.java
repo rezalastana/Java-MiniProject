@@ -4,7 +4,6 @@ import com.miniproject.krs.model.KelasModel;
 import com.miniproject.krs.util.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
@@ -41,7 +40,7 @@ public class KelasEntity {
     private String ruangId;
 
     @Column(name = "matakuliah_id", length = 36, insertable = false, updatable = false)
-    private String matakuliahId;
+    private String mataKuliahId;
 
     @Column(name = "dosen_id", length = 36, insertable = false, updatable = false)
     private String dosenId;
@@ -122,14 +121,14 @@ public class KelasEntity {
 
     }
 
-    public KelasEntity(String code, String hari, String jam_mulai, String jam_selesai, String ruangId, String matakuliahId, String dosenId){
+    public KelasEntity(String code, String hari, String jam_mulai, String jam_selesai, String ruangId, String mataKuliahId, String dosenId){
         this.id = UUID.randomUUID().toString();
         this.code = code;
         this.hari = hari;
         this.jam_mulai = DateUtil.getTime(jam_mulai);
         this.jam_selesai = DateUtil.getTime(jam_selesai);
         this.ruangId = ruangId;
-        this.matakuliahId = matakuliahId;
+        this.mataKuliahId = mataKuliahId;
         this.dosenId = dosenId;
     }
 

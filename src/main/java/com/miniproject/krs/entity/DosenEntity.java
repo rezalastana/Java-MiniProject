@@ -86,9 +86,9 @@ public class DosenEntity {
 //        kelas.setDosen(this);
 //    }
 //
-//    public void removeKelas(KelasEntity kelas){
-//        this.kelasS.remove(kelas);
-//        kelas.setDosen(null);
-//    }
+    public void removeDosen(KelasEntity kelas){
+        this.kelas.remove(kelas);
+        kelas.setDosen(null);
+    }
 
 }

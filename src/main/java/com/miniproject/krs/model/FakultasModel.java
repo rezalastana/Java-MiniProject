@@ -16,7 +16,7 @@ public class FakultasModel {
     private String code;
     private String name;
     private String alamat;
-    private List<JurusanModel> jurusanList;
+    // private List<JurusanModel> jurusanList;
 
 
     //constructor
@@ -30,11 +30,11 @@ public class FakultasModel {
     }
     public FakultasModel(FakultasEntity entity){
         BeanUtils.copyProperties(entity, this);
-        if (entity.getJurusans() != null || !entity.getJurusans().isEmpty()){
-            jurusanList = new ArrayList<>();
-            for (JurusanEntity jrs : entity.getJurusans()){
-                jurusanList.add(new JurusanModel(jrs));
-            }
-        }
+//        if (entity.getJurusans() != null || !entity.getJurusans().isEmpty()){
+//            jurusanList = new ArrayList<>();
+//            for (JurusanEntity jrs : entity.getJurusans()){
+//                jurusanList.add(new JurusanModel(jrs));
+//            }
+//        }
     }
 }
