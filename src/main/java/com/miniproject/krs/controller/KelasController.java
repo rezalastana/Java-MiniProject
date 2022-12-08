@@ -46,7 +46,7 @@ public class KelasController {
         List<MataKuliahModel> mataKuliah = mataKuliahService.getAll();
         List<DosenModel> dosen = dosenService.getAll();
         view.addObject("ruangList", ruang);
-        view.addObject("matakuliahList", mataKuliah);
+        view.addObject("mataKuliahList", mataKuliah);
         view.addObject("dosenList", dosen);
         return view;
     }

@@ -45,4 +45,34 @@ public interface KelasRepo extends JpaRepository<KelasEntity, String> {
                 @Param("dosenId") String dosenId
         );
 
+        //NEW VALIDASI
+        @Query("select t from KelasEntity t where t.ruangId= :ruangId AND t.hari= :hari AND t.jam_mulai>= :jam_mulai AND t.jam_mulai< :jam_selesai")
+        List<KelasEntity> validation5(
+                @Param("ruangId") String ruangId,
+                @Param("hari") String hari,
+                @Param("jam_mulai") Date jam_mulai,
+                @Param("jam_selesai") Date jam_selesai
+        );
+        @Query("select t from KelasEntity t where t.ruangId= :ruangId AND t.hari= :hari AND t.jam_selesai> :jam_mulai AND t.jam_selesai<= :jam_selesai")
+        List<KelasEntity> validation6(
+                @Param("ruangId") String ruangId,
+                @Param("hari") String hari,
+                @Param("jam_mulai") Date jam_mulai,
+                @Param("jam_selesai") Date jam_selesai
+        );
+        @Query("select t from KelasEntity t where t.dosenId= :dosenId AND t.hari= :hari AND t.jam_mulai>= :jam_mulai AND t.jam_selesai< :jam_selesai")
+        List<KelasEntity> validation7(
+                @Param("dosenId") String dosenId,
+                @Param("hari") String hari,
+                @Param("jam_mulai") Date jam_mulai,
+                @Param("jam_selesai") Date jam_selesai
+        );
+        @Query("select t from KelasEntity t where t.dosenId= :dosenId AND t.hari= :hari AND t.jam_selesai> :jam_mulai AND t.jam_selesai<= :jam_selesai")
+        List<KelasEntity> validation8(
+                @Param("dosenId") String dosenId,
+                @Param("hari") String hari,
+                @Param("jam_mulai") Date jam_mulai,
+                @Param("jam_selesai") Date jam_selesai
+        );
+
 }

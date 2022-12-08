@@ -7,32 +7,42 @@
 
         <div class="card-body">
             <div class="form-group">
+                <label for="nim">NIM Mahasiswa</label>
+                <input th:type="text" name="nim" id="nim" class="form-control">
+            </div>
+
+            <div class="form-group">
                 <label for="name">Nama Mahasiswa</label>
                 <input th:type="text" name="name" id="name" class="form-control">
             </div>
+
             <div class="form-group">
-                <label >Jenis Kelamin</label>
-                <select class="form-control" name="jk">
+                <label for="jk" >Jenis Kelamin</label>
+                <select class="form-control" name="jk" id="jk">
                     <option value=""></option>
                     <option th:value="Laki-laki">Laki-laki</option>
                     <option th:value="Perempuan">Perempuan</option>
                 </select>
             </div>
+
             <div class="form-group">
-                <label >Alamat</label>
-                <input th:type="text" name="alamat" class="form-control">
+                <label for="alamat" >Alamat</label>
+                <input th:type="text" name="alamat" id="alamat" class="form-control">
             </div>
+
             <div class="form-group">
-                <label >Tempat Lahir</label>
-                <input th:type="text" name="tmptLahir" class="form-control">
+                <label for="tmptLahir" >Tempat Lahir</label>
+                <input th:type="text" name="tmptLahir" id="tmptLahir" class="form-control">
             </div>
+
             <div class="form-group">
-                <label >Tanggal Lahir</label>
-                <input th:type="date" name="tglLahir" class="form-control">
+                <label for="tglLahir" >Tanggal Lahir</label>
+                <input th:type="date" name="tglLahir" id="tglLahir" class="form-control">
             </div>
+
             <div class="form-group">
-                <label >Agama</label>
-                <select class="form-control" name="agama">
+                <label for="agama" >Agama</label>
+                <select class="form-control" name="agama" id="agama">
                     <option value=""></option>
                     <option th:value="Islam">Islam</option>
                     <option th:value="Kristen">Kristen</option>
@@ -40,13 +50,15 @@
                     <option th:value="Konghucu">Konghucu</option>
                 </select>
             </div>
+
             <div class="form-group">
-                <label >Jurusan</label>
-                <select class="form-control" name="jurusan.id">
+                <label for="jurusanId">Jurusan</label>
+                <select class="form-control" name="jurusanId" id="jurusanId">
                     <option value=""></option>
                     <option th:each="data: ${jurusanList}" th:value="${data.id}" th:text="${data.name}"></option>
                 </select>
             </div>
+
         </div>
 
         <div class="card-footer">

@@ -5,6 +5,7 @@ import com.miniproject.krs.entity.MahasiswaEntity;
 import com.miniproject.krs.model.MahasiswaModel;
 import com.miniproject.krs.repository.MahasiswaRepo;
 import com.miniproject.krs.service.MahasiswaService;
+import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,11 +63,45 @@ public class MahasiswaServiceImpl implements MahasiswaService {
 
     @Override
     public Optional<MahasiswaModel> update(String id, MahasiswaModel data) {
+        //Tidak menggunakan Optional
+        //        //check id
+//        if (id == null || id.isEmpty() || id.isBlank()){
+//            return new MahasiswaModel();
+//        }
+//
+//        //ambil data dari tabel
+//        Optional<MahasiswaEntity> result = repository.findById(id);
+//        //check data result
+//        if (result.isPresent()){
+//            MahasiswaEntity request = result.get();
+//            //replace data lama dengan baru
+//            request.setNim(data.getNim());
+//            request.setName(data.getName());
+//            request.setJk(data.getJk());
+//            request.setAlamat(data.getAlamat());
+//            request.setTmptLahir(data.getTmptLahir());
+//            request.setTglLahir(data.getTglLahir());
+//            request.setAgama(data.getAgama());
+//            request.setJurusanId(data.getJurusanId());
+//            //update waktu
+//            request.setUpdatedAt(LocalDateTime.now());
+//            request.setUpdatedBy("SYSTEM");
+//
+//            try {
+//                this.repository.save(request);
+//                //jika berhasil
+//                return new MahasiswaModel(request);
+//            } catch (Exception e){
+//                System.out.println("Error update: "+ e.getMessage());
+//            }
+//        }
+//        return new MahasiswaModel();
+
+        //check tabel dengan id
         Optional<MahasiswaEntity> result = this.repository.findById(id);
         if (result.isEmpty()) {
             return Optional.empty();
         }
-
         // check data dari result
         MahasiswaEntity request = result.get();
         // replace data lama dengan dataBaru
@@ -76,7 +111,7 @@ public class MahasiswaServiceImpl implements MahasiswaService {
         request.setTmptLahir(data.getTmptLahir());
         request.setTglLahir(data.getTglLahir());
         request.setAgama(data.getAgama());
-        JurusanEntity jurusan = new JurusanEntity(data.getJurusan().getId());
+        JurusanEntity jurusan = new JurusanEntity(data.getJurusanId());
         request.setJurusan(jurusan);
         // update waktu
         request.setUpdatedAt(LocalDateTime.now());
@@ -89,6 +124,7 @@ public class MahasiswaServiceImpl implements MahasiswaService {
         } catch (Exception e) {
             return Optional.empty();
         }
+
     }
 
     @Override

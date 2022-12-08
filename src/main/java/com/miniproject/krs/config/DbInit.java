@@ -3,11 +3,15 @@ package com.miniproject.krs.config;
 
 import com.miniproject.krs.entity.FakultasEntity;
 import com.miniproject.krs.entity.JurusanEntity;
+import com.miniproject.krs.entity.LookupEntity;
 import com.miniproject.krs.entity.RoleEntity;
 import com.miniproject.krs.entity.UserEntity;
 import com.miniproject.krs.repository.FakultasRepo;
+import com.miniproject.krs.service.LookupService;
 import com.miniproject.krs.service.RoleService;
 import com.miniproject.krs.service.UserService;
+import com.miniproject.krs.util.Constant;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,13 +25,15 @@ public class DbInit implements CommandLineRunner {
     private PasswordEncoder encoder;
     private UserService userService;
     private RoleService roleService;
+    private LookupService lookupService;
 
     @Autowired
-    public DbInit(FakultasRepo fakultasRepo, PasswordEncoder encoder, UserService userService, RoleService roleService) {
+    public DbInit(FakultasRepo fakultasRepo, PasswordEncoder encoder, UserService userService, RoleService roleService, LookupService lookupService) {
         this.fakultasRepo = fakultasRepo;
         this.encoder = encoder;
         this.userService = userService;
         this.roleService = roleService;
+        this.lookupService = lookupService;
     }
 
     private void initFakultas(){
@@ -75,10 +81,51 @@ public class DbInit implements CommandLineRunner {
         }
     }
 
+    private void initLookup(){
+        if(lookupService.getByGroup("HARI").isEmpty()){
+            lookupService.saveAll(Arrays.asList(
+                    new LookupEntity("HARI","SENIN","Senin",1),
+                    new LookupEntity("HARI","SELASA","Selasa",2),
+                    new LookupEntity("HARI","RABU","RABU",3),
+                    new LookupEntity("HARI","KAMIS","Kamis",4),
+                    new LookupEntity("HARI","JUMAT","Jumat",5),
+                    new LookupEntity("HARI","SABTU","Sabtu",6),
+                    new LookupEntity("HARI","MINGGU","Minggu",7)
+            ));
+        }
+
+        if(lookupService.getByGroup("SEMESTER").isEmpty()){
+            lookupService.saveAll(Arrays.asList(
+                    new LookupEntity("SEMESTER","GANJIL","Ganjil",1),
+                    new LookupEntity("SEMESTER","GANJIL","Genap",2)
+            ));
+        }
+
+        if(lookupService.getByGroup(Constant.GENDER).isEmpty()){
+            lookupService.saveAll(Arrays.asList(
+                    new LookupEntity("GENDER","PRIA","Pria",1),
+                    new LookupEntity("GENDER","WANITA","Wanita",2)
+            ));
+        }
+
+        if(lookupService.getByGroup(Constant.AGAMA).isEmpty()){
+            lookupService.saveAll(Arrays.asList(
+                    new LookupEntity("AGAMA","ISLAM","Islam",1),
+                    new LookupEntity("AGAMA","KRISTEN","Kristen",2),
+                    new LookupEntity("AGAMA","KATHOLIK","Katholik",3),
+                    new LookupEntity("AGAMA","HINDU","Hindu",4),
+                    new LookupEntity("AGAMA","BUDHA","Budha",5),
+                    new LookupEntity("AGAMA","KONGHUCHU","Konghuchu",6),
+                    new LookupEntity("AGAMA","LAINNYA","Lainnya",7)
+            ));
+        }
+    }
+
     @Override
     public void run(String... args) throws Exception {
+        // panggil method generate semua yang dibutuhkan init
         initFakultas();
-        // panggil method generate role user
         initUserAndRole();
+        initLookup();
     }
 }

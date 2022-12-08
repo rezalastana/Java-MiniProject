@@ -28,18 +28,18 @@
             </div>
 
             <div class="form-group">
-                <label>Ruang ID</label>
-                <select name="ruang.id" class="form-control">
+                <label for="ruang">Ruang ID</label>
+                <select name="ruangId" class="form-control">
                     <option value=""></option>
-                    <option th:each="data : ${ruangList}" th:value="${data.id}" th:text="${data.name}"></option>
+                    <option id="ruang" th:each="data : ${ruangList}" th:value="${data.id}" th:text="${data.name}"></option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Mata Kuliah ID</label>
-                <select name="mataKuliah.id" class="form-control">
+                <select name="mataKuliahId" class="form-control">
                     <option value=""></option>
-                    <option th:each="data : ${matakuliahList}" th:value="${data.id}" th:text="${data.name}"></option>
+                    <option th:each="data : ${mataKuliahList}" th:value="${data.id}" th:text="${data.name}"></option>
                 </select>
             </div>
         </div>
@@ -47,7 +47,7 @@
         <div class="col-md-6 col-lg-6">
             <div class="form-group">
                 <label>Dosen ID</label>
-                <select name="dosen.id" class="form-control">
+                <select name="dosenId" class="form-control">
                     <option value=""></option>
                     <option th:each="data : ${dosenList}" th:value="${data.id}" th:text="${data.name}"></option>
                 </select>

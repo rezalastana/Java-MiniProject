@@ -44,25 +44,44 @@ public class KelasServiceImpl implements KelasService {
 
     @Override
     public Optional<KelasModel> save(KelasModel data) {
-        if (data == null)
+        if (data == null){
             return Optional.empty();
 
-        List<KelasEntity> check01 = this.repo.validation1(
-                data.getHari(),
+        }
+
+        List<KelasEntity> check01 = this.repo.validation5(
                 data.getRuangId(),
+                data.getHari(),
+                data.getJam_mulai(),
+                data.getJam_selesai()
+        );
+
+        List<KelasEntity> check02 = this.repo.validation6(
+                data.getRuangId(),
+                data.getHari(),
+                data.getJam_mulai(),
+                data.getJam_selesai()
+        );
+
+        List<KelasEntity> check03 = this.repo.validation7(
                 data.getDosenId(),
-                data.getJam_mulai(),
-                data.getJam_selesai()
-        );
-
-        List<KelasEntity> check02 = this.repo.validation3(
                 data.getHari(),
-                data.getRuangId(),
                 data.getJam_mulai(),
                 data.getJam_selesai()
         );
 
-        if (check01.size()>0 || check02.size()>0){
+        List<KelasEntity> check04 = this.repo.validation8(
+                data.getDosenId(),
+                data.getHari(),
+                data.getJam_mulai(),
+                data.getJam_selesai()
+        );
+
+        List<KelasEntity> check05 = this.repo.validation4(
+                data.getDosenId()
+        );
+
+        if (check05.size()>0){
             return Optional.empty();
         }
 

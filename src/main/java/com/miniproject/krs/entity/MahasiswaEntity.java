@@ -19,7 +19,10 @@ public class MahasiswaEntity {
     @Column(name = "id", length = 36)
     private String id;
 
-    @Column(name = "nama_siswa", length = 120)
+    @Column(name = "nim_mahasiswa", length = 120)
+    private String nim;
+
+    @Column(name = "nama_mahasiswa", length = 120)
     private String name;
 
     @Column(name = "jk", length = 10)
@@ -65,14 +68,16 @@ public class MahasiswaEntity {
         this.id = UUID.randomUUID().toString();
 
         //buat validasi
-        if (data.getJurusan() != null){
-            //bisa gini
-            //JurusanEntity jurusanEntity = new JurusanEntity();
-            //jurusanEntity.setId(data.getJurusan().getId())
-            //this.jurusan = jurusanEntity
-            //atau langsung
-            this.jurusan = new JurusanEntity(data.getJurusan().getId());
-        }
+//        if (data.getJurusan != null){
+//            //bisa gini
+//            //JurusanEntity jurusanEntity = new JurusanEntity();
+//            //jurusanEntity.setId(data.getJurusan().getId())
+//            //this.jurusan = jurusanEntity
+//            //atau langsung
+//            this.jurusan = new JurusanEntity(data.getJurusan().getId());
+//        }
+        //change to this
+        this.jurusanId = data.getJurusanId();
 
         this.createdAt = LocalDateTime.now();
         this.createdBy = "SYSTEM";

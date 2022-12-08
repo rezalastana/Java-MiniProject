@@ -1,21 +1,28 @@
 <!-- Card Start  -->
 <form th:action="@{~/mahasiswa/update}" method="post">
-    <input type="hidden" name="id" th:value="${data.id}">
-    <div class="card">
-        <div class="card-header bg-warning">
-            <h3 class="card-title">Edit Mahasiswa</h3>
-        </div>
+    <div class="modal-header bg-warning">
+        <h3 class="modal-title">New Mahasiswa</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 
-        <div class="card-body">
+    <div class="modal-body row">
+        <input type="hidden" name="id" th:value="data.id">
+        <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="nim">NIM Mahasiswa</label>
+                <input type="text" name="nim" id="nim" class="form-control" th:value="${data.name}" >
+            </div>
 
             <div class="form-group">
-                <label>Nama Mahasiswa</label>
+                <label for="name">Nama Mahasiswa</label>
                 <input id="name" type="text" name="name" class="form-control" th:value="${data.name}" >
             </div>
 
             <div class="form-group">
-                <label>Jenis Kelamin</label>
-                <select class="form-control" name="jk">
+                <label for="jk">Jenis Kelamin</label>
+                <select class="form-control" name="jk" id="jk">
                     <option value=""></option>
                     <option th:value="Laki-laki" th:selected="${data.jk} == Laki-laki">Laki-laki</option>
                     <option th:value="Perempuan" th:selected="${data.jk} == Perempuan">Perempuan</option>
@@ -23,23 +30,23 @@
             </div>
 
             <div class="form-group">
-                <label>Alamat</label>
-                <input type="text" name="alamat" class="form-control" th:value="${data.alamat}" >
+                <label for="alamat">Alamat</label>
+                <input type="text" name="alamat" id="alamat" class="form-control" th:value="${data.alamat}" >
             </div>
 
             <div class="form-group">
-                <label>Tempat Lahir</label>
-                <input type="text" name="tmptLahir" class="form-control" th:value="${data.tmptLahir}" >
+                <label for="tmptLahir">Tempat Lahir</label>
+                <input type="text" name="tmptLahir" id="tmptLahir" class="form-control" th:value="${data.tmptLahir}" >
             </div>
 
             <div class="form-group">
-                <label>Tanggal Lahir</label>
-                <input type="date" name="tglLahir" class="form-control" th:value="${data.tglLahir}" >
+                <label for="tglLahir">Tanggal Lahir</label>
+                <input type="date" name="tglLahir" id="tglLahir" class="form-control" th:value="${data.tglLahir}" >
             </div>
 
             <div class="form-group">
-                <label>Agama</label>
-                <select class="form-control" name="agama">
+                <label for="agama">Agama</label>
+                <select class="form-control" name="agama" id="agama">
                     <option value=""></option>
                     <option th:value="Islam" th:selected="${data.agama} == Islam">Islam</option>
                     <option th:value="Kristen" th:selected="${data.agama} == Kristen">Kristen</option>
@@ -49,18 +56,18 @@
             </div>
 
             <div class="form-group">
-                <label>Jurusan</label>
-                <select class="form-control" name="jurusan.id">
+                <label for="jurusanId">Jurusan</label>
+                <select class="form-control" name="jurusanId" id="jurusanId">
                         <option value=""></option>
-                        <option th:each="jurusan : ${jurusanList}" th:value="${jurusan.id}" th:text="${jurusan.name}" th:selected="${jurusan.id} == ${data.jurusanId}"></option>
+                        <option th:each="data : ${jurusanList}" th:value="${data.id}" th:text="${data.name}" th:selected="${data.id} == ${mahasiswa.jurusanId}"></option>
                     </select>
             </div>
+        </div>
+    </div>
 
-        </div>
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-success">Update</button>
-        </div>
-        </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-success">Update</button>
+    </div>    
+        
 </form>
 <!-- Card End  -->

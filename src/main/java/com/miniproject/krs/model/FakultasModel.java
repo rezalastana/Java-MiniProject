@@ -28,6 +28,7 @@ public class FakultasModel {
         this.name = name;
         this.alamat = alamat;
     }
+
     public FakultasModel(FakultasEntity entity){
         BeanUtils.copyProperties(entity, this);
 //        if (entity.getJurusans() != null || !entity.getJurusans().isEmpty()){
