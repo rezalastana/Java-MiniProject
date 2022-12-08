@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Fakultas</title>
 </head>
 <body>
 <div class="row mb-2" layout:fragment="breadcrumb">
@@ -67,12 +67,9 @@
               <a th:href="@{~/fakultas/edit/{id}(id=${data.id})}" class="btn btn-s btn-warning btn-edit">
                 <i class="fas fa-edit"></i>
               </a> &nbsp;
-              <form th:action="@{~/fakultas/delete}" method="post" class="d-inline" onsubmit="return confirm('Yakin hapus data ?')">
-                <input type="hidden" name="id" th:value="${data.id}">
-                <button type="submit" class="btn btn-s btn-danger">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </form>
+              <a th:href="@{~/fakultas/delete/{id}(id=${data.id})}" class="btn btn-s btn-danger" onclick="return confirm('Delete data?')">
+                <i class="fas fa-trash"></i>
+              </a> &nbsp;
             </td>
           </tr>
           </tbody>
@@ -87,51 +84,84 @@
 </div>
 
 <script layout:fragment="client-script">
-  // event button add
-  $("#btn-add").on("click", function (e){
-    e.preventDefault();
-    var url = $(this).attr('href');
-    $.ajax({
-      url:url,
-      dataType: 'HTML',
-      method: 'GET',
-      success: function (result){
-        $('#modal-form').find('.modal-content').html(result);
-        $("#modal-form").modal('show');
-      }
-    })
-    return;
-  });
+    // event button add
+    $("#btn-add").on("click", function (e){
+      e.preventDefault();
+      var url = $(this).attr('href');
+      $.ajax({
+        url:url,
+        dataType: 'HTML',
+        method: 'GET',
+        success: function (result){
+          $('#modal-form').find('.modal-content').html(result);
+          $('#modal-form').find('.card-title').html("New Fakultas");
+          $("#modal-form").modal('show');
+        }
+      })
+      return;
+    });
 
-  $(".btn-detail").on("click", function (e){
-    e.preventDefault();
-    var url = $(this).attr('href');
-    $.ajax({
-      url:url,
-      dataType: 'HTML',
-      method: 'GET',
-      success: function (result){
-        $('#modal-form').find('.modal-content').html(result);
-        $("#modal-form").modal('show');
-      }
-    })
-    return;
-  });
+    $(".btn-detail").on("click", function (e){
+      e.preventDefault();
+      var url = $(this).attr('href');
+      $.ajax({
+        url:url,
+        dataType: 'HTML',
+        method: 'GET',
+        success: function (result){
+          $('#modal-form').find('.modal-content').html(result);
+          $('#modal-form').find('.card-title').html("Detail Fakultas");
+          $("#modal-form").modal('show');
+        }
+      })
+      return;
+    });
 
-  $(".btn-edit").on("click", function (e){
-    e.preventDefault();
-    var url = $(this).attr('href');
-    $.ajax({
-      url:url,
-      dataType: 'HTML',
-      method: 'GET',
-      success: function (result){
-        $('#modal-form').find('.modal-content').html(result);
-        $("#modal-form").modal('show');
-      }
-    })
-    return;
-  });
-</script>
+    $(".btn-edit").on("click", function (e){
+      e.preventDefault();
+      var url = $(this).attr('href');
+      $.ajax({
+        url:url,
+        dataType: 'HTML',
+        method: 'GET',
+        success: function (result){
+          $('#modal-form').find('.modal-content').html(result);
+          $('#modal-form').find('.card-title').html("Edit Fakultas");
+          $("#modal-form").modal('show');
+        }
+      })
+      return;
+    });
+
+    // event dari button di click
+    $("#btn-coba").on("click", function (){
+      alert("test button click");
+      console.log("On log info");
+
+      $("#table-data").hide();
+    });
+
+    $('#modal-form').on('submit','#form-input', function (){
+      $.ajax({
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        dataType: 'html',
+        type: 'POST',
+        success: function (data){
+          // masukan dulu result ke modal
+          $('#modal-form').find('.modal-content').html(data);
+          // check jumlah element yang memiliki class has-error
+          var check = $("#modal-form").find(".modal-content").find(".error").length;
+          console.log("count invalid : "+ check);
+          // jika tidak ada error
+          if(check==0){
+            $("#modal-form").modal('hide');
+            location.reload();
+          }
+        }
+      });
+      return false;
+    });
+  </script>
 </body>
 </html>

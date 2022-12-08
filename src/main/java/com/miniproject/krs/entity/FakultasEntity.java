@@ -66,8 +66,6 @@ public class FakultasEntity {
         this.id = UUID.randomUUID().toString();
         this.createdAt = LocalDateTime.now();
         this.createdBy = "SYSTEM";
-        this.updatedAt = LocalDateTime.now();
-        this.updatedBy = "SYSTEM";
     }
 
     public void addJurusan(JurusanEntity jurusan){

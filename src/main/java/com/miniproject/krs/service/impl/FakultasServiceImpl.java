@@ -109,4 +109,18 @@ public class FakultasServiceImpl implements FakultasService {
         }
         return Optional.of(new FakultasModel(fakultas));
     }
+
+    @Override
+    public Boolean validCode(FakultasModel model) {
+        //check code
+        List<FakultasEntity> checkCode = this.repository.findByCode(model.getCode());
+        return checkCode.isEmpty();
+    }
+
+    @Override
+    public Boolean validName(FakultasModel model) {
+        //checkName
+        List<FakultasEntity> checkName = this.repository.findByName(model.getName());
+        return checkName.isEmpty();
+    }
 }

@@ -22,7 +22,7 @@
   <link rel="stylesheet" th:href="@{~/plugins/daterangepicker/daterangepicker.css}">
   <!-- summernote -->
   <link rel="stylesheet" th:href="@{~/plugins/summernote/summernote-bs4.min.css}">
-  <title>Title</title>
+    <title>Title</title>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -55,14 +55,6 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-
-        <div class="my-3" th:if="${success}">
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong th:text="${success}"></strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        </div>
-
         <div class="row" layout:fragment="content"></div>
         <!-- render content -->
 

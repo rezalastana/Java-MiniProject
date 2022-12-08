@@ -2,13 +2,20 @@ package com.miniproject.krs.controller;
 
 import com.miniproject.krs.model.FakultasModel;
 import com.miniproject.krs.service.FakultasService;
+
+import groovy.lang.Binding;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/fakultas")
@@ -24,19 +31,37 @@ public class FakultasController {
     public ModelAndView index(){
         ModelAndView view = new ModelAndView("fakultas/index.html");
         List<FakultasModel> result = service.getAll();
+
         view.addObject("dataList", result);
         return view;
     }
 
     @GetMapping("/add")
     public ModelAndView add(){
-        return new ModelAndView("fakultas/add.html");
+        ModelAndView view = new ModelAndView("fakultas/add.html");
+        view.addObject("fakultas", new FakultasModel());
+        return view;
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute FakultasModel request, RedirectAttributes redirectAttributes){
+    public ModelAndView save(@Valid @ModelAttribute("fakultas") FakultasModel request, BindingResult result){
+        ModelAndView view = new ModelAndView("fakultas/add.html");
+        if(Boolean.FALSE.equals(service.validCode(request))){
+            FieldError fieldError = new FieldError("fakultas","code","Code "+ request.getCode() +" already exist");
+            result.addError(fieldError);
+        }
+
+        if(Boolean.FALSE.equals(service.validName(request))){
+            FieldError fieldError = new FieldError("fakultas","code","Name with "+ request.getName() +" already exist");
+            result.addError(fieldError);
+        }
+
+        if(result.hasErrors()){
+            view.addObject("fakultas", request);
+            return view;
+        }
+
         this.service.save(request);
-        redirectAttributes.addFlashAttribute("success", "Data has been successfully saved!");
         return new ModelAndView("redirect:/fakultas");
     }
 

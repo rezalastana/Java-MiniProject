@@ -3,16 +3,27 @@ package com.miniproject.krs.model;
 import com.miniproject.krs.entity.JurusanEntity;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.beans.BeanUtils;
 
 @Getter
 @Setter
 public class JurusanModel {
     private String id;
+
+    @NotBlank
+    @NotEmpty
     private String code;
+    @NotBlank
+    @NotEmpty
     private String name;
+    @NotBlank
+    @NotEmpty
     private String fakultasId;
-    private FakultasModel fakultas;
+    private String fakultasName;
 
     //constructor
     public JurusanModel(){
@@ -28,7 +39,7 @@ public class JurusanModel {
         BeanUtils.copyProperties(entity, this);
         if (entity.getFakultas() != null){
             fakultasId = entity.getFakultas().getId();
-            fakultas = new FakultasModel(entity.getFakultas());
+            fakultasName = entity.getFakultas().getName();
         }
     }
 }

@@ -56,16 +56,20 @@ public class JurusanEntity {
         this.name = model.getName();
 
         //validasi
-        if (model.getFakultas() != null){
-            FakultasEntity fakultasEntity = new FakultasEntity();
-            fakultasEntity.setId(model.getFakultas().getId());
-            this.fakultas = fakultasEntity;
-        }
+        // if (model.getFakultas() != null){
+        //     FakultasEntity fakultasEntity = new FakultasEntity();
+        //     fakultasEntity.setId(model.getFakultas().getId());
+        //     this.fakultas = fakultasEntity;
+        // }
+
+        //validasi2
+        FakultasEntity fakultasEntity = new FakultasEntity();
+        fakultasEntity.setId(model.getFakultasId());
+        this.fakultas = fakultasEntity;
+        
 
         this.createdAt=LocalDateTime.now();
         this.createdBy="SYSTEM";
-        this.updatedAt=LocalDateTime.now();
-        this.updatedBy="SYSTEM";
     }
 
     public JurusanEntity(String code, String name) {
@@ -79,6 +83,7 @@ public class JurusanEntity {
         this.name = name;
 
         FakultasEntity fakultasEntity = new FakultasEntity(fakultasId);
+        this.fakultas = fakultasEntity;
 
         this.createdAt=LocalDateTime.now();
         this.createdBy="SYSTEM";
