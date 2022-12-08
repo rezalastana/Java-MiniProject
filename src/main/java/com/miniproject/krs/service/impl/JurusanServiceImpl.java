@@ -68,7 +68,7 @@ public class JurusanServiceImpl implements JurusanService {
         JurusanEntity request = result.get();
         request.setCode(data.getCode());
         request.setName(data.getName());
-        FakultasEntity fakultas = new FakultasEntity(data.getFakultas().getId());
+        FakultasEntity fakultas = new FakultasEntity(data.getFakultasId());
         request.setFakultas(fakultas);
         request.setUpdatedAt(LocalDateTime.now());
 

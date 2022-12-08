@@ -1,25 +1,31 @@
 <!-- card mulai -->
-<form th:action="@{~/fakultas/update}" method="post">
-    <input type="hidden" name="id" th:value="${data.id}">
+<form th:action="@{~/fakultas/update}" method="post" id="form-input" th:object="${fakultas}">
+    
     <div class="card">
         <div class="card-header bg-warning">
-            <h3 class="card-title">New Fakultas</h3>
+            <h3 class="card-title">Edit Fakultas</h3>
         </div>
 
         <div class="card-body">
+            <!-- hidden id -->
+            <input type="hidden" id="id" th:field="*{id}">
+
             <div class="form-group">
                 <label for="code">Kode</label>
-                <input id="code" type="text" name="code" class="form-control" th:value="${data.code}">
+                <input id="code" type="text" th:field="*{code}" th:class="${#fields.hasErrors('code')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('code')}" class="error invalid-feedback" th:errors="*{code}"></span>
             </div>
 
             <div class="form-group">
                 <label for="name">Nama</label>
-                <input id="name" type="text" name="name" class="form-control" th:value="${data.name}">
+                <input id="name" type="text" th:field="*{name}" th:class="${#fields.hasErrors('code')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('name')}" class="error invalid-feedback" th:errors="*{name}"></span>
             </div>
 
             <div class="form-group">
                 <label for="alamat">Alamat</label>
-                <textarea  id="alamat" name="alamat" class="form-control" th:text="${data.alamat}"> </textarea>
+                <textarea  id="alamat" th:field="*{alamat}" th:class="${#fields.hasErrors('alamat')} ? 'form-control is-invalid': 'form-control'"> </textarea>
+                <span th:if="${#fields.hasErrors('alamat')}" class="error invalid-feedback" th:errors="*{alamat}"></span>
             </div>
         </div>
 
