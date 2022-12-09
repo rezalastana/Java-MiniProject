@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface JurusanService {
     public List<JurusanModel> getAll();
     public JurusanModel getById(String id);
+    public Boolean validCode(JurusanModel data);
+    public Boolean validName(JurusanModel data);
     public Optional<JurusanModel> save(JurusanModel data);
     public Optional<JurusanModel> update(String id, JurusanModel data);
     public Optional<JurusanModel> delete(String id);

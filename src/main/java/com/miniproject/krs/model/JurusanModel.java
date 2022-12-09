@@ -17,9 +17,11 @@ public class JurusanModel {
     @NotBlank
     @NotEmpty
     private String code;
+
     @NotBlank
     @NotEmpty
     private String name;
+    
     @NotBlank
     @NotEmpty
     private String fakultasId;

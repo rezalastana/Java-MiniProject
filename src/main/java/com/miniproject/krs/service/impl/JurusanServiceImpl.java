@@ -5,6 +5,9 @@ import com.miniproject.krs.entity.JurusanEntity;
 import com.miniproject.krs.model.JurusanModel;
 import com.miniproject.krs.repository.JurusanRepo;
 import com.miniproject.krs.service.JurusanService;
+
+import groovyjarjarpicocli.CommandLine.Model;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +42,7 @@ public class JurusanServiceImpl implements JurusanService {
             return new JurusanModel();
         }
         Optional<JurusanEntity> result = repository.findById(id);
-        // convert dari SiswaEntity => SiswaModel
+        // convert dari JurusanEntity => JurusanModel
         return result.map(JurusanModel::new).orElseGet(JurusanModel::new);
     }
 
@@ -49,8 +52,21 @@ public class JurusanServiceImpl implements JurusanService {
             return Optional.empty();
         }
 
+        //checkCode
+        List<JurusanEntity> checkCode = this.repository.findByCode(data.getCode());
+        if (!checkCode.isEmpty()) {
+            return Optional.empty();
+        }
+
+        //checkName
+        List<JurusanEntity> checkName = this.repository.findByName(data.getName());
+        if (!checkName.isEmpty()) {
+            return Optional.empty();
+        }
+
         JurusanEntity result = new JurusanEntity(data);
         try{
+            //proses simpan data
             this.repository.save(result);
             return Optional.of(new JurusanModel(result));
         }catch (Exception e){
@@ -96,5 +112,19 @@ public class JurusanServiceImpl implements JurusanService {
         }catch (Exception e){
             return Optional.empty();
         }
+    }
+
+    @Override
+    public Boolean validCode(JurusanModel data) {
+        //checkCode
+        List<JurusanEntity> checkCode = this.repository.findByCode(data.getCode());
+        return checkCode.isEmpty();
+    }
+
+    @Override
+    public Boolean validName(JurusanModel data) {
+        //checkName
+        List<JurusanEntity> checkName = this.repository.findByName(data.getName());
+        return checkName.isEmpty();
     }
 }

@@ -14,7 +14,7 @@
 
             <div class="form-group">
                 <label for="name">Nama</label>
-                <input id="name" type="text" th:field="*{name}" th:class="${#fields.hasErrors('code')} ? 'form-control is-invalid': 'form-control'">
+                <input id="name" type="text" th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid': 'form-control'">
                 <span th:if="${#fields.hasErrors('name')}" class="error invalid-feedback" th:errors="*{name}"></span>
             </div>
 

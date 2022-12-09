@@ -37,7 +37,7 @@ public class FakultasController {
     @GetMapping("/add")
     public ModelAndView add(){
         ModelAndView view = new ModelAndView("fakultas/add.html");
-        view.addObject("fakultas", new FakultasModel());
+        view.addObject("fakultas", new FakultasModel());//"fakultas" penamaan untuk pengambilan data fakultas
         return view;
     }
 
