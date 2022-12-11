@@ -40,7 +40,7 @@ public class MahasiswaEntity {
     @Column(name = "agama", length = 20)
     private String agama;
 
-    @Column(name = "jurusan_id", length = 36, insertable = false, updatable = false)
+    @Column(name = "jurusan_id", length = 36)
     private String jurusanId;
 
     @Column(name = "created_at")
@@ -56,7 +56,7 @@ public class MahasiswaEntity {
     private String updatedBy;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "jurusan_id", nullable = false)
+    @JoinColumn(name = "jurusan_id", insertable = false, updatable = false)
     private JurusanEntity jurusan;
 
     public MahasiswaEntity() {

@@ -56,7 +56,7 @@ public class MahasiswaModel {
         BeanUtils.copyProperties(data, this);
         //buat validasi
         if (data.getJurusan() != null){
-            jurusanId = data.getJurusanId();
+            jurusanId = data.getJurusanId();//pemanggilan jurusanId dari mahasiswa entity langsung 
             jurusanName = data.getJurusan().getName(); //pemanggilan name jurusan langsung
         }
     }

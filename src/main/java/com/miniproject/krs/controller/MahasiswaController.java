@@ -1,51 +1,73 @@
 package com.miniproject.krs.controller;
 
+import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
+import com.miniproject.krs.entity.LookupEntity;
 import com.miniproject.krs.model.JurusanModel;
 import com.miniproject.krs.model.MahasiswaModel;
 import com.miniproject.krs.service.JurusanService;
+import com.miniproject.krs.service.LookupService;
 import com.miniproject.krs.service.MahasiswaService;
+import com.miniproject.krs.util.Constant;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @RestController
 @RequestMapping("/mahasiswa")
 public class MahasiswaController {
-    private JurusanService jurusanService;
     private MahasiswaService mahasiswaService;
+    private JurusanService jurusanService;
+    private LookupService lookupService;
 
     @Autowired
-    public MahasiswaController(JurusanService jurusanService, MahasiswaService mahasiswaService){
-        this.jurusanService = jurusanService;
+    public MahasiswaController(JurusanService jurusanService, MahasiswaService mahasiswaService, LookupService lookupService){
         this.mahasiswaService = mahasiswaService;
+        this.jurusanService = jurusanService;
+        this.lookupService = lookupService;
     }
 
     @GetMapping
     public ModelAndView index(){
         ModelAndView view = new ModelAndView("mahasiswa/index.html");
         List<MahasiswaModel> result = mahasiswaService.getAll();
+
         view.addObject("dataList", result);
         return view;
     }
 
     @GetMapping("/add")
     public ModelAndView add(){
+        //link
         ModelAndView view = new ModelAndView("mahasiswa/add.html");
-        List<JurusanModel> result = jurusanService.getAll();
-        view.addObject("jurusanList", result);
+
+        view.addObject("genderList", lookupService.getByGroup(Constant.GENDER));
+        view.addObject("agamaList", lookupService.getByGroup(Constant.AGAMA));
+        view.addObject("jurusanList", jurusanService.getAll());
+        // untuk order
+        view.addObject("byPosition", Comparator.comparing(LookupEntity::getPosition));
+
+        view.addObject("mahasiswa", new MahasiswaModel());
         return view;
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute MahasiswaModel request){
+    public ModelAndView save(@Valid @ModelAttribute("mahasiswa") MahasiswaModel request, BindingResult result){
+        ModelAndView view = new ModelAndView("pages/mahasiswa/form.html");
+        if(result.hasErrors()){
+            view.addObject("mahasiswa", request);
+        }
+
         this.mahasiswaService.save(request);
         return new ModelAndView("redirect:/mahasiswa");
     }
@@ -59,13 +81,18 @@ public class MahasiswaController {
         List<JurusanModel> jurusan = jurusanService.getAll();
         ModelAndView view = new ModelAndView("mahasiswa/edit.html");
 
-        view.addObject("data", mahasiswa);
+        view.addObject("mahasiswa", mahasiswa);
         view.addObject("jurusanList", jurusan);
         return view;
     }
 
     @PostMapping("/update")
-    public ModelAndView update(@ModelAttribute MahasiswaModel request){
+    public ModelAndView update(@Valid @ModelAttribute("mahasiswa") MahasiswaModel request, BindingResult result){
+        if (result.hasErrors()) {
+            ModelAndView view = new ModelAndView("mahasiswa/edit.html");
+            view.addObject("mahasiswa", request);
+            return view;
+        }
         this.mahasiswaService.update(request.getId(), request);
         return new ModelAndView("redirect:/mahasiswa");
     }

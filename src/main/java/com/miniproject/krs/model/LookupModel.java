@@ -7,6 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class LookupModel {
     private String id;
@@ -14,5 +15,5 @@ public class LookupModel {
     private String code;
     private String name;
     private Integer position;
-private Boolean active;
+    private Boolean active;
 }

@@ -68,9 +68,12 @@
                 <a th:href="@{~/jurusan/edit/{id}(id=${data.id})}" class="btn btn-s btn-warning btn-edit">
                     <i class="fas fa-edit"></i>
                 </a> &nbsp;
-                <a th:href="@{~/jurusan/delete/{id}(id=${data.id})}" class="btn btn-s btn-danger" onclick="return confirm('Delete data?')">
-                    <i class="fas fa-trash"></i>
-                </a> &nbsp;
+                <form th:action="@{~/jurusan/delete}" method="post" class="d-inline" onsubmit="return confirm('Delete data ?')">
+                    <input type="hidden" name="id" th:value="${data.id}">
+                    <button type="submit" class="btn btn-s btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
                 </td>
             </tr>
             </tbody>
@@ -133,10 +136,10 @@
 
     // event dari button di click
     $("#btn-coba").on("click", function (){
-      alert("test button click");
-      console.log("On log info");
+        alert("test button click");
+        console.log("On log info");
 
-      $("#table-data").hide();
+        $("#table-data").hide();
     });
 
     $('#modal-form').on('submit','#form-input', function (){

@@ -1,17 +1,12 @@
 package com.miniproject.krs.config;
 
 
-import com.miniproject.krs.entity.FakultasEntity;
-import com.miniproject.krs.entity.JurusanEntity;
-import com.miniproject.krs.entity.LookupEntity;
-import com.miniproject.krs.entity.RoleEntity;
-import com.miniproject.krs.entity.UserEntity;
+import com.miniproject.krs.entity.*;
 import com.miniproject.krs.repository.FakultasRepo;
 import com.miniproject.krs.service.LookupService;
 import com.miniproject.krs.service.RoleService;
 import com.miniproject.krs.service.UserService;
 import com.miniproject.krs.util.Constant;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,11 +16,11 @@ import java.util.Arrays;
 
 @Service
 public class DbInit implements CommandLineRunner {
-    private FakultasRepo fakultasRepo;
-    private PasswordEncoder encoder;
-    private UserService userService;
-    private RoleService roleService;
-    private LookupService lookupService;
+    private final FakultasRepo fakultasRepo;
+    private final PasswordEncoder encoder;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final LookupService lookupService;
 
     @Autowired
     public DbInit(FakultasRepo fakultasRepo, PasswordEncoder encoder, UserService userService, RoleService roleService, LookupService lookupService) {
@@ -51,6 +46,7 @@ public class DbInit implements CommandLineRunner {
             fakultas2.addJurusan(new JurusanEntity("KJ", "Kedokteran Jiwa"));
             fakultas2.addJurusan(new JurusanEntity("KH", "Kedokteran Hewan"));
             fakultas2.addJurusan(new JurusanEntity("KC", "Kedokteran Cinta"));
+
             this.fakultasRepo.save(fakultas2);
         }
     }
@@ -72,11 +68,11 @@ public class DbInit implements CommandLineRunner {
             this.userService.save(admin);
 
             RoleEntity mhsRole = roleService.getByName("ROLE_MAHASISWA");
-            UserEntity mhs = new UserEntity("templates/mahasiswa", encoder.encode("mahasiswa"),"mahasiswa@gmail.com", Arrays.asList(mhsRole));
+            UserEntity mhs = new UserEntity("mahasiswa", encoder.encode("mahasiswa"),"mahasiswa@gmail.com", Arrays.asList(mhsRole));
             this.userService.save(mhs);
 
             RoleEntity dosenRole = roleService.getByName("ROLE_DOSEN");
-            UserEntity dosen = new UserEntity("templates/dosen", encoder.encode("dosen"),"dosen@gmail.com", Arrays.asList(dosenRole));
+            UserEntity dosen = new UserEntity("dosen", encoder.encode("dosen"),"dosen@gmail.com", Arrays.asList(dosenRole));
             this.userService.save(dosen);
         }
     }
@@ -123,7 +119,7 @@ public class DbInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // panggil method generate semua yang dibutuhkan init
+        // panggil method generate role user
         initFakultas();
         initUserAndRole();
         initLookup();

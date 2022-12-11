@@ -67,9 +67,12 @@
               <a th:href="@{~/fakultas/edit/{id}(id=${data.id})}" class="btn btn-s btn-warning btn-edit">
                 <i class="fas fa-edit"></i>
               </a> &nbsp;
-              <a th:href="@{~/fakultas/delete/{id}(id=${data.id})}" class="btn btn-s btn-danger" onclick="return confirm('Delete data?')">
-                <i class="fas fa-trash"></i>
-              </a> &nbsp;
+              <form th:action="@{~/jurusan/delete}" method="post" class="d-inline" onsubmit="return confirm('Delete data ?')">
+                    <input type="hidden" name="id" th:value="${data.id}">
+                    <button type="submit" class="btn btn-s btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </button>
+              </form>
             </td>
           </tr>
           </tbody>

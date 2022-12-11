@@ -98,14 +98,14 @@ public class FakultasController {
         return view;
     }
 
-    @PostMapping("/delete")
-    public ModelAndView delete(@ModelAttribute FakultasModel request){
-        FakultasModel fakultas = service.getById(request.getId());
+    @PostMapping("/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") String id){
+        FakultasModel fakultas = service.getById(id);
         if (fakultas == null){
             return new ModelAndView("redirect:/fakultas");
         }
 
-        this.service.delete(request.getId());
+        this.service.delete(id);
         return new ModelAndView("redirect:/fakultas");
     }
 }

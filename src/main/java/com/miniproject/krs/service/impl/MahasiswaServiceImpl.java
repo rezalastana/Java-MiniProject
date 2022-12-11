@@ -53,7 +53,7 @@ public class MahasiswaServiceImpl implements MahasiswaService {
         }
         MahasiswaEntity result = new MahasiswaEntity(data);
         try {
-            // proses simpan data => table siswa
+            // proses simpan data
             this.repository.save(result);
             return Optional.of(new MahasiswaModel(result));
         } catch (Exception e) {
@@ -140,5 +140,19 @@ public class MahasiswaServiceImpl implements MahasiswaService {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public Boolean validNim(MahasiswaModel data) {
+        //checkNIM
+        List<MahasiswaEntity> checkNim = this.repository.findByNim(data.getNim());
+        return checkNim.isEmpty();
+    }
+
+    @Override
+    public Boolean validName(MahasiswaModel data) {
+        //checkName
+        List<MahasiswaEntity> checkName = this.repository.findByName(data.getName());
+        return checkName.isEmpty();
     }
 }

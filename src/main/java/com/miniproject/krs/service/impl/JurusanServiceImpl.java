@@ -6,8 +6,6 @@ import com.miniproject.krs.model.JurusanModel;
 import com.miniproject.krs.repository.JurusanRepo;
 import com.miniproject.krs.service.JurusanService;
 
-import groovyjarjarpicocli.CommandLine.Model;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -12,20 +12,19 @@ import com.miniproject.krs.repository.LookupRepo;
 import com.miniproject.krs.service.LookupService;
 
 import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @Service
 public class LookupServiceImpl implements LookupService {
     private final LookupRepo repo;
 
     @Autowired
-    public LookupServiceImpl(LookupRepo repo){
+    public LookupServiceImpl(LookupRepo repo) {
         this.repo = repo;
     }
 
     @Override
     public List<LookupEntity> getByGroup(String group) {
-        if (group == null || group.isEmpty()) {
+        if(group == null || group.isEmpty()){
             return Collections.emptyList();
         }
 
@@ -34,31 +33,29 @@ public class LookupServiceImpl implements LookupService {
 
     @Override
     public Optional<LookupEntity> getByCode(String code) {
-        if (code == null || code.isEmpty()) {
+        if(code == null || code.isEmpty())
             return Optional.empty();
-        }
+
         return this.repo.findByCode(code);
     }
 
     @Override
     public Optional<LookupEntity> getById(String id) {
-        if (id == null || id.isEmpty()) {
+        if(id == null || id.isEmpty())
             return Optional.empty();
-        }
 
         return this.repo.findById(id);
     }
 
     @Override
     public Optional<LookupEntity> save(LookupEntity entity) {
-        if (entity == null){
+        if(entity == null)
             return Optional.empty();
-        }
 
         try{
             this.repo.save(entity);
             return Optional.of(entity);
-        } catch(Exception e){
+        }catch (Exception e){
             log.error("Failed save lookup, error: {}", e.getMessage());
             return Optional.empty();
         }
@@ -66,18 +63,15 @@ public class LookupServiceImpl implements LookupService {
 
     @Override
     public List<LookupEntity> saveAll(List<LookupEntity> entities) {
-        if (entities == null) {
+        if(entities.isEmpty())
             return Collections.emptyList();
-        }
 
-        try {
+        try{
             this.repo.saveAll(entities);
             return entities;
-        } catch (Exception e) {
+        }catch (Exception e){
             log.error("Failed save lookup, error: {}", e.getMessage());
             return Collections.emptyList();
         }
     }
-
-    
 }
