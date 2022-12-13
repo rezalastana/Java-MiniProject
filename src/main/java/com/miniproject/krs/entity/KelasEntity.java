@@ -58,7 +58,7 @@ public class KelasEntity {
     private Integer quota;
 
     @Column(name = "bisa_online")
-    private Boolean bisaOnline;
+    private String bisaOnline;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -96,21 +96,21 @@ public class KelasEntity {
         this.id = UUID.randomUUID().toString();
         BeanUtils.copyProperties(model, this);
 
-        if (model.getRuang() != null) {
+        if (model.getRuangId() != null) {
             RuangEntity ruangEntity = new RuangEntity();
-            ruangEntity.setId(model.getRuang().getId());
+            ruangEntity.setId(model.getRuangName());
             this.ruang = ruangEntity;
         }
 
-        if (model.getMataKuliah() != null){
+        if (model.getMataKuliahId() != null){
             MataKuliahEntity mataKuliahEntity = new MataKuliahEntity();
-            mataKuliahEntity.setId(model.getMataKuliah().getId());
+            mataKuliahEntity.setId(model.getMataKuliahName());
             this.mataKuliah = mataKuliahEntity;
         }
 
-        if (model.getDosen() != null) {
+        if (model.getDosenId() != null) {
             DosenEntity dosenEntity = new DosenEntity();
-            dosenEntity.setId(model.getDosen().getId());
+            dosenEntity.setId(model.getDosenName());
             this.dosen = dosenEntity;
         }
 

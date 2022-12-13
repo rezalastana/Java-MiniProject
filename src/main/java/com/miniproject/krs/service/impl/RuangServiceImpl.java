@@ -2,6 +2,7 @@ package com.miniproject.krs.service.impl;
 
 import com.miniproject.krs.entity.GedungEntity;
 import com.miniproject.krs.entity.RuangEntity;
+import com.miniproject.krs.model.GedungModel;
 import com.miniproject.krs.model.RuangModel;
 import com.miniproject.krs.repository.RuangRepo;
 import com.miniproject.krs.service.RuangService;
@@ -42,10 +43,35 @@ public class RuangServiceImpl implements RuangService {
     }
 
     @Override
+    public Boolean validCode(RuangModel model) {
+        //check code
+        List<RuangEntity> checkCode = this.repo.findByCode(model.getCode());
+        return checkCode.isEmpty();
+    }
+
+    @Override
+    public Boolean validName(RuangModel model) {
+        //check Name
+        List<RuangEntity> checkName = this.repo.findByName(model.getName());
+        return checkName.isEmpty();
+    }
+
+    @Override
     public Optional<RuangModel> save(RuangModel data) {
         if (data == null){
             return  Optional.empty();
         }
+
+        List<RuangEntity> checkCode = this.repo.findByCode(data.getCode());
+        if (!checkCode.isEmpty()){
+            return Optional.empty();
+        }
+
+        List<RuangEntity> checkName = this.repo.findByName(data.getName());
+        if (!checkName.isEmpty()){
+            return Optional.empty();
+        }
+
         RuangEntity result = new RuangEntity(data);
         try {
             this.repo.save(result);
@@ -64,7 +90,7 @@ public class RuangServiceImpl implements RuangService {
         RuangEntity request = result.get();
         request.setCode(data.getCode());
         request.setName(data.getName());
-        GedungEntity gedung = new GedungEntity(data.getGedung().getId());
+        GedungEntity gedung = new GedungEntity(data.getGedungId());
         request.setGedung(gedung);
         request.setLantaiKe(data.getLantaiKe());
         request.setUpdatedAt(LocalDateTime.now());

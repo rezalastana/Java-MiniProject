@@ -28,7 +28,7 @@ public class MataKuliahEntity {
     private String name;
 
     @Column(name = "sks")
-    private Integer sks;
+    private String sks;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -59,8 +59,11 @@ public class MataKuliahEntity {
         this.id = UUID.randomUUID().toString();
         this.createdAt = LocalDateTime.now();
         this.createdBy = "SYSTEM";
-        this.updatedAt = LocalDateTime.now();
-        this.updatedBy = "SYSTEM";
+    }
+
+    public void addMataKuliah(KelasEntity kelas){
+        this.kelas.add(kelas);
+        kelas.setMataKuliah(this);
     }
 
     public void removeMataKuliah(KelasEntity kelas){

@@ -1,18 +1,22 @@
 package com.miniproject.krs.controller;
 
+import com.miniproject.krs.entity.LookupEntity;
 import com.miniproject.krs.model.DosenModel;
 import com.miniproject.krs.model.KelasModel;
 import com.miniproject.krs.model.MataKuliahModel;
 import com.miniproject.krs.model.RuangModel;
-import com.miniproject.krs.service.DosenService;
-import com.miniproject.krs.service.KelasService;
-import com.miniproject.krs.service.MataKuliahService;
-import com.miniproject.krs.service.RuangService;
+import com.miniproject.krs.service.*;
+import com.miniproject.krs.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -22,13 +26,15 @@ public class KelasController {
     private RuangService ruangService;
     private DosenService dosenService;
     private MataKuliahService mataKuliahService;
+    private LookupService lookupService;
 
     @Autowired
-    public KelasController(KelasService kelasService, RuangService ruangService, DosenService dosenService, MataKuliahService mataKuliahService){
+    public KelasController(KelasService kelasService, RuangService ruangService, DosenService dosenService, MataKuliahService mataKuliahService, LookupService lookupService){
         this.kelasService = kelasService;
         this.ruangService = ruangService;
         this.dosenService = dosenService;
         this.mataKuliahService = mataKuliahService;
+        this.lookupService = lookupService;
     }
 
     @GetMapping
@@ -42,17 +48,36 @@ public class KelasController {
     @GetMapping("/add")
     public ModelAndView add(){
         ModelAndView view = new ModelAndView("kelas/add.html");
+
+        view.addObject("hariList", lookupService.getByGroup("HARI"));
+        view.addObject("onlineList", lookupService.getByGroup("ONLINE"));
+        // untuk order urut byPosition
+        view.addObject("byPosition", Comparator.comparing(LookupEntity::getPosition));
+
         List<RuangModel> ruang = ruangService.getAll();
         List<MataKuliahModel> mataKuliah = mataKuliahService.getAll();
         List<DosenModel> dosen = dosenService.getAll();
         view.addObject("ruangList", ruang);
         view.addObject("mataKuliahList", mataKuliah);
         view.addObject("dosenList", dosen);
+        view.addObject("kelas", new KelasModel());
         return view;
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute KelasModel request){
+    public ModelAndView save(@Valid @ModelAttribute("kelas") KelasModel request, BindingResult result){
+        ModelAndView view = new ModelAndView("ruang:/add.html");
+        if (Boolean.FALSE.equals(kelasService.validCode(request))){
+            FieldError fieldError = new FieldError("kelas","code","Code "+ request.getCode() +" already exist");
+            result.addError(fieldError);
+        }
+
+        if (Boolean.FALSE.equals(kelasService.validHari(request))) {
+            ObjectError objectError = new FieldError("kelas","hari","Hari "+ request.getHari() +" already exist");
+            result.addError(objectError);
+        }
+
+
         this.kelasService.save(request);
         return new ModelAndView("redirect:/kelas");
     }

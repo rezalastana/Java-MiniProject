@@ -11,6 +11,11 @@ import java.util.List;
 
 @Repository
 public interface KelasRepo extends JpaRepository<KelasEntity, String> {
+    //validasi code and name
+    List<KelasEntity> findByCode(String code);
+    List<KelasEntity> findByHari(String hari);
+
+
     //validasi dimana hari, ruang, dosen sudah ada dan jam mulai>= dan jam_selesai<=
         @Query("SELECT t FROM KelasEntity t WHERE t.hari= :hari AND t.ruangId= :ruangId AND t.dosenId= :dosenId AND (t.jam_mulai>= :jam_mulai OR t.jam_selesai<= :jam_selesai)")
         List<KelasEntity> validation1(

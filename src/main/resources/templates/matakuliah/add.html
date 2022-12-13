@@ -1,5 +1,5 @@
 <!-- Card Start  -->
-<form th:action="@{~/matakuliah/save}" method="post">
+<form th:action="@{~/matakuliah/save}" method="post" id="form-input" th:object="${mataKuliah}">
     <div class="card">
         <div class="card-header bg-primary">
             <h3 class="card-title">Add New Matakuliah</h3>
@@ -7,25 +7,29 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label>Code</label>
-                <input type="text" name="code" id="code" class="form-control" >
+                <label for="code">Code</label>
+                <input id="code" type="text" th:field="*{code}" th:class="${#fields.hasErrors('code')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('code')}" class="error invalid-feedback" th:errors="*{code}"></span>
             </div>
 
             <div class="form-group">
-                <label>Nama Matakuliah</label>
-                <input type="text" name="name" id="name" class="form-control">
+                <label for="name">Nama Matakuliah</label>
+                <input id="name" type="text" th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('name')}" class="error invalid-feedback" th:errors="*{name}"></span>
             </div>
 
             <div class="form-group">
-                <label>SKS</label>
-                <input type="number" name="sks" id="sks" class="form-control">
+                <label for="sks">SKS</label>
+                <input id="sks" type="number" th:field="*{sks}" th:class="${#fields.hasErrors('sks')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('sks')}" class="error invalid-feedback" th:errors="*{sks}"></span>
             </div>
 
         </div>
+    </div>
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-success">Submit</button>
-        </div>
+    <div class="modal-footer justify-content-between">
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
     </div>
 </form>
 <!-- Card End  -->

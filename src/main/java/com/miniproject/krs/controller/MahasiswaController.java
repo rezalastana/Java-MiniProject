@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,13 +49,12 @@ public class MahasiswaController {
 
     @GetMapping("/add")
     public ModelAndView add(){
-        //link
         ModelAndView view = new ModelAndView("mahasiswa/add.html");
 
         view.addObject("genderList", lookupService.getByGroup(Constant.GENDER));
         view.addObject("agamaList", lookupService.getByGroup(Constant.AGAMA));
         view.addObject("jurusanList", jurusanService.getAll());
-        // untuk order
+        // untuk order urut byPosition
         view.addObject("byPosition", Comparator.comparing(LookupEntity::getPosition));
 
         view.addObject("mahasiswa", new MahasiswaModel());
@@ -63,9 +63,21 @@ public class MahasiswaController {
 
     @PostMapping("/save")
     public ModelAndView save(@Valid @ModelAttribute("mahasiswa") MahasiswaModel request, BindingResult result){
-        ModelAndView view = new ModelAndView("pages/mahasiswa/form.html");
+        ModelAndView view = new ModelAndView("mahasiswa/add.html");
+
+        if (Boolean.FALSE.equals(mahasiswaService.validNim(request))){
+            FieldError fieldError = new FieldError("mahasiswa", "code", "Code "+ request.getNim() +" already exist");
+            result.addError(fieldError);
+        }
+
+        if (Boolean.FALSE.equals(mahasiswaService.validName(request))) {
+            ObjectError objectError = new FieldError("mahasiswa","code","Code "+ request.getName() +" already exist");
+            result.addError(objectError);
+        }
+
         if(result.hasErrors()){
             view.addObject("mahasiswa", request);
+            return view;
         }
 
         this.mahasiswaService.save(request);

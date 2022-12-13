@@ -33,6 +33,7 @@ public class JurusanController {
     public ModelAndView index(){
         ModelAndView view = new ModelAndView("jurusan/index.html");
         List<JurusanModel> result = jurusanService.getAll();
+
         view.addObject("dataList", result);
         return view;
     }
@@ -116,4 +117,6 @@ public class JurusanController {
         this.jurusanService.delete(request.getId());
         return new ModelAndView("redirect:/jurusan");
     }
+
+
 }

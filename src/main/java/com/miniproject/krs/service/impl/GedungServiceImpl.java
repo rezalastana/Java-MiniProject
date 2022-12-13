@@ -33,10 +33,37 @@ public class GedungServiceImpl implements GedungService {
     }
 
     @Override
+    public Boolean validCode(GedungModel model) {
+        //check code
+        List<GedungEntity> checkCode = this.repo.findByCode(model.getCode());
+        return checkCode.isEmpty();
+    }
+
+    @Override
+    public Boolean validName(GedungModel model) {
+        //check name
+        List<GedungEntity> checkName = this.repo.findByName(model.getName());
+        return checkName.isEmpty();
+    }
+
+    @Override
     public Optional<GedungModel> save(GedungModel data) {
         if (data == null){
             return Optional.empty();
         }
+
+        //check code
+
+        List<GedungEntity> checkCode = this.repo.findByCode(data.getCode());
+        if (!checkCode.isEmpty()){
+            return Optional.empty();
+        }
+
+        List<GedungEntity> checkName = this.repo.findByName(data.getName());
+        if (!checkName.isEmpty()){
+            return Optional.empty();
+        }
+
         GedungEntity result = new GedungEntity(data);
         try {
             this.repo.save(result);

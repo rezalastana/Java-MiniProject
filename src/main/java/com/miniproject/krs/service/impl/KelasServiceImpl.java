@@ -2,6 +2,7 @@ package com.miniproject.krs.service.impl;
 
 import com.miniproject.krs.entity.*;
 import com.miniproject.krs.model.KelasModel;
+import com.miniproject.krs.model.RuangModel;
 import com.miniproject.krs.repository.KelasRepo;
 import com.miniproject.krs.service.KelasService;
 import lombok.extern.slf4j.Slf4j;
@@ -43,15 +44,42 @@ public class KelasServiceImpl implements KelasService {
     }
 
     @Override
+    public Boolean validCode(KelasModel model) {
+        //check code
+        List<KelasEntity> checkCode = this.repo.findByCode(model.getCode());
+        return checkCode.isEmpty();
+    }
+
+    @Override
+    public Boolean validHari(KelasModel model) {
+        //check name
+        List<KelasEntity> checkHari = this.repo.findByHari(model.getHari());
+        return checkHari.isEmpty();
+    }
+
+    @Override
     public Optional<KelasModel> save(KelasModel data) {
         if (data == null){
             return Optional.empty();
 
         }
 
-        List<KelasEntity> check01 = this.repo.validation5(
-                data.getRuangId(),
+        //checkCode
+        List<KelasEntity> checkCode = this.repo.findByCode(data.getCode());
+        if (!checkCode.isEmpty()) {
+            return Optional.empty();
+        }
+
+        //checkName
+        List<KelasEntity> checkHari = this.repo.findByHari(data.getHari());
+        if (!checkHari.isEmpty()) {
+            return Optional.empty();
+        }
+
+        List<KelasEntity> check01 = this.repo.validation2(
                 data.getHari(),
+                data.getRuangId(),
+                data.getDosenId(),
                 data.getJam_mulai(),
                 data.getJam_selesai()
         );
@@ -81,7 +109,7 @@ public class KelasServiceImpl implements KelasService {
                 data.getDosenId()
         );
 
-        if (check05.size()>0){
+        if (check01.size()>0){
             return Optional.empty();
         }
 
@@ -106,9 +134,9 @@ public class KelasServiceImpl implements KelasService {
         request.setHari(data.getHari());
         request.setJam_mulai(data.getJam_mulai());
         request.setJam_selesai(data.getJam_selesai());
-        RuangEntity ruang = new RuangEntity(data.getRuang().getId());
-        MataKuliahEntity mataKuliah = new MataKuliahEntity(data.getMataKuliah().getId());
-        DosenEntity dosen = new DosenEntity(data.getDosen().getId());
+        RuangEntity ruang = new RuangEntity(data.getRuangId());
+        MataKuliahEntity mataKuliah = new MataKuliahEntity(data.getMataKuliahId());
+        DosenEntity dosen = new DosenEntity(data.getDosenId());
         request.setStatus(data.getStatus());
         request.setTahunAjaran(data.getTahunAjaran());
         request.setSemester(data.getSemester());

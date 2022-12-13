@@ -1,14 +1,18 @@
 package com.miniproject.krs.controller;
 
 import com.miniproject.krs.model.GedungModel;
+import com.miniproject.krs.model.JurusanModel;
 import com.miniproject.krs.model.RuangModel;
 import com.miniproject.krs.service.GedungService;
 import com.miniproject.krs.service.RuangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -27,6 +31,7 @@ public class RuangController {
     public ModelAndView index(){
         ModelAndView view = new ModelAndView("ruang/index.html");
         List<RuangModel> result = ruangService.getAll();
+
         view.addObject("dataList", result);
         return view;
     }
@@ -34,15 +39,32 @@ public class RuangController {
     @GetMapping("/add")
     public ModelAndView add(){
         ModelAndView view = new ModelAndView("ruang/add.html");
-        List<GedungModel> result = gedungService.getAll();
-        view.addObject("gedungList", result);
+//      List<GedungModel> result = gedungService.getAll();
+        view.addObject("ruang", new RuangModel());
+        view.addObject("gedungList", gedungService.getAll());
         return view;
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute RuangModel request){
+    public ModelAndView save(@Valid @ModelAttribute("ruang") RuangModel request, BindingResult result){
+        ModelAndView view = new ModelAndView("ruang/add.html");
+        if (Boolean.FALSE.equals(ruangService.validCode(request))){
+            FieldError fieldError = new FieldError("ruang","code","Code "+ request.getCode() +" already exist");
+            result.addError(fieldError);
+        }
+
+        if (Boolean.FALSE.equals(ruangService.validName(request))){
+            FieldError fieldError = new FieldError("ruang","name","Name "+ request.getName() +" already exist");
+            result.addError(fieldError);
+        }
+        if (result.hasErrors()){
+            view.addObject("ruang", request);
+            return view;
+        }
+
         this.ruangService.save(request);
         return new ModelAndView("redirect:/ruang");
+
     }
 
     @GetMapping("/edit/{id}")
@@ -60,7 +82,13 @@ public class RuangController {
     }
 
     @PostMapping("/update")
-    public ModelAndView update(@ModelAttribute RuangModel request){
+    public ModelAndView update(@Valid @ModelAttribute("ruang") RuangModel request, BindingResult result){
+        if (result.hasErrors()){
+            ModelAndView view = new ModelAndView("ruang/edit.html");
+            view.addObject("ruang", request);
+            return view;
+        }
+
         this.ruangService.update(request.getId(), request);
         return new ModelAndView("redirect:/ruang");
     }
@@ -71,6 +99,7 @@ public class RuangController {
         if (ruang == null){
             return new ModelAndView("redirect:/ruang");
         }
+
         ModelAndView view = new ModelAndView("ruang/detail.html");
         view.addObject("data", ruang);
         return view;
@@ -82,6 +111,7 @@ public class RuangController {
         if (ruang == null){
             return new ModelAndView("redirect:/ruang");
         }
+
         this.ruangService.delete(request.getId());
         return new ModelAndView("redirect:/ruang");
     }

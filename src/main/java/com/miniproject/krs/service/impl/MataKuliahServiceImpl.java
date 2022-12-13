@@ -5,6 +5,7 @@ import com.miniproject.krs.entity.MataKuliahEntity;
 import com.miniproject.krs.model.MataKuliahModel;
 import com.miniproject.krs.repository.MataKuliahRepo;
 import com.miniproject.krs.service.MataKuliahService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class MataKuliahServiceImpl implements MataKuliahService {
     private MataKuliahRepo repo;
@@ -40,6 +42,19 @@ public class MataKuliahServiceImpl implements MataKuliahService {
         if (data == null){
             return Optional.empty();
         }
+
+        //check code
+        List<MataKuliahEntity> checkCode = this.repo.findByCode(data.getCode());
+        if (!checkCode.isEmpty()){
+            return Optional.empty();
+        }
+
+        List<MataKuliahEntity> checkName = this.repo.findByName(data.getName());
+        if (!checkCode.isEmpty()){
+            return Optional.empty();
+        }
+
+
         MataKuliahEntity result = new MataKuliahEntity(data);
         try {
             this.repo.save(result);
@@ -81,5 +96,18 @@ public class MataKuliahServiceImpl implements MataKuliahService {
         } catch (Exception e){
             return Optional.empty();
         }
+    }
+
+    @Override
+    public Boolean validCode(MataKuliahModel model) {
+        //check Code
+        List<MataKuliahEntity> checkCode = this.repo.findByCode(model.getCode());
+        return checkCode.isEmpty();
+    }
+
+    @Override
+    public Boolean validName(MataKuliahModel model) {
+        List<MataKuliahEntity> checkName = this.repo.findByName(model.getName());
+        return checkName.isEmpty();
     }
 }

@@ -37,6 +37,19 @@ public class DosenServiceImpl implements DosenService {
         if(data==null){
             return Optional.empty();
         }
+
+        //check NIP
+        List<DosenEntity> checkNip = this.repository.findByNip(data.getNip());
+        if (!checkNip.isEmpty()){
+            return Optional.empty();
+        }
+
+        //check Name
+        List<DosenEntity> checkName = this.repository.findByName(data.getName());
+        if (!checkName.isEmpty()){
+            return Optional.empty();
+        }
+
         DosenEntity result = new DosenEntity(data);
         try{
             //proses simpan data
@@ -71,6 +84,7 @@ public class DosenServiceImpl implements DosenService {
         if (result.isEmpty()){
             return Optional.empty();
         }
+
         try {
             DosenEntity data = result.get();
             this.repository.delete(data);
@@ -78,5 +92,19 @@ public class DosenServiceImpl implements DosenService {
         } catch (Exception e){
             return Optional.empty();
         }
+    }
+
+    @Override
+    public Boolean validNip(DosenModel model) {
+        //check NIP
+        List<DosenEntity> checkNip = this.repository.findByNip(model.getNip());
+        return checkNip.isEmpty();
+    }
+
+    @Override
+    public Boolean validName(DosenModel model) {
+        //check Name
+        List<DosenEntity> checkName = this.repository.findByName(model.getName());
+        return checkName.isEmpty();
     }
 }

@@ -30,7 +30,6 @@
                     <option th:each="option: ${fakultasList}" th:value="${option.id}" th:text="${option.name}" th:selected="${option.id == jurusan.fakultasId}"></option>
                 </select>
                 <span th:if="${#fields.hasErrors('fakultasId')}" class="error invalid-feedback" th:errors="*{fakultasId}"></span>
-                </select>
             </div>
         </div>
 

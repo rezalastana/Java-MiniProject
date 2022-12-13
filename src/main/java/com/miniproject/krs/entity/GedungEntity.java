@@ -67,8 +67,6 @@ public class GedungEntity {
         this.id = UUID.randomUUID().toString();
         this.createdAt = LocalDateTime.now();
         this.createdBy = "SYSTEM";
-        this.updatedAt = LocalDateTime.now();
-        this.updatedBy = "SYSTEM";
     }
 
     public void addRuang(RuangEntity ruang){

@@ -1,5 +1,5 @@
 <!-- Card Start  -->
-<form th:action="@{~/dosen/save}" method="post">
+<form th:action="@{~/dosen/save}" method="post" id="form-input" th:object="${dosen}">
     <div class="card">
         <div class="card-header bg-primary">
             <h3 class="card-title">Add New Dosen</h3>
@@ -7,39 +7,46 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label>NIP</label>
-                <input th:type="text" name="nip" id="nip" class="form-control" >
+                <label for="nip">NIP</label>
+                <input id="nip" type="text" th:field="*{nip}" th:class="${#fields.hasErrors('nip')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('nip')}" class="error invalid-feedback" th:errors="*{nip}"></span>
             </div>
 
             <div class="form-group">
-                <label>Nama Dosen</label>
-                <input th:type="text" name="name" class="form-control">
+                <label for="name">Nama Dosen</label>
+                <input id="name" type="text" th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('name')}" class="error invalid-feedback" th:errors="*{name}"></span>
             </div>
 
             <div class="form-group">
-                <label>Jenis Kelamin</label>
-                <select class="form-control" name="jk">
+                <label for="jk">Jenis Kelamin</label>
+                <select id="jk" class="form-control" th:field="*{jk}" th:class="${#fields.hasErrors('jk')} ? 'form-control is-invalid': 'form-control'">
                     <option value=""></option>
-                    <option th:value="Laki-laki">Laki-laki</option>
-                    <option th:value="Perempuan">Perempuan</option>
+                    <option th:each="option: ${#lists.sort(genderList, byPosition)}" th:value="${option.code}" th:text="${option.name}"
+                            th:selected="${option.code == dosen.jk}"></option>
                 </select>
+                <span th:if="${#fields.hasErrors('jk')}" class="error invalid-feedback" th:errors="*{jk}"></span>
             </div>
 
             <div class="form-group">
-                <label>Alamat</label>
-                <input th:type="text" name="alamat" class="form-control">
+                <label for="alamat">Alamat</label>
+                <input id="alamat" type="text" th:field="*{alamat}" th:class="${#fields.hasErrors('alamat')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('alamat')}" class="error invalid-feedback" th:errors="*{alamat}"></span>
             </div>
 
             <div class="form-group">
-                <label>Gelar</label>
-                <input th:type="text" name="gelar" class="form-control">
+                <label for="gelar">Gelar</label>
+                <input id="gelar" type="text" th:field="*{gelar}" th:class="${#fields.hasErrors('gelar')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('gelar')}" class="error invalid-feedback" th:errors="*{gelar}"></span>
             </div>
 
-        </div>
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-success">Submit</button>
         </div>
     </div>
+
+    <div class="modal-footer justify-content-between">
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+
 </form>
 <!-- Card End  -->

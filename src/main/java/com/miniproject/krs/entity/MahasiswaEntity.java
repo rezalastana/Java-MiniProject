@@ -19,7 +19,7 @@ public class MahasiswaEntity {
     @Column(name = "id", length = 36)
     private String id;
 
-    @Column(name = "nim_mahasiswa", length = 120)
+    @Column(name = "nim_mahasiswa",unique = true, length = 120)
     private String nim;
 
     @Column(name = "nama_mahasiswa", length = 120)

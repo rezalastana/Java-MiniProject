@@ -75,9 +75,9 @@ public class RuangEntity {
         this.code = model.getCode();
         this.name = model.getName();
 
-        if (model.getGedung() != null){
+        if (model.getGedungId() != null){
             GedungEntity gedungEntity = new GedungEntity();
-            gedungEntity.setId(model.getGedung().getId());
+            gedungEntity.setId(model.getGedungId());
             this.gedung = gedungEntity;
         }
         this.lantaiKe = model.getLantaiKe();

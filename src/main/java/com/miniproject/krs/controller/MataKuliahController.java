@@ -4,9 +4,12 @@ import com.miniproject.krs.model.MataKuliahModel;
 import com.miniproject.krs.service.MataKuliahService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -23,17 +26,37 @@ public class MataKuliahController {
     public ModelAndView index(){
         ModelAndView view = new ModelAndView("matakuliah/index.html");
         List<MataKuliahModel> result = service.getAll();
+
         view.addObject("dataList", result);
         return view;
     }
 
     @GetMapping("/add")
     public ModelAndView add(){
-        return new ModelAndView("matakuliah/add.html");
+        ModelAndView view = new ModelAndView("matakuliah/add.html");
+
+        view.addObject("mataKuliah", new MataKuliahModel());
+        return view;
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute MataKuliahModel request){
+    public ModelAndView save(@Valid @ModelAttribute("mataKuliah") MataKuliahModel request, BindingResult result){
+        ModelAndView view = new ModelAndView("matakuliah/add.html");
+        if (Boolean.FALSE.equals(service.validCode(request))){
+            FieldError fieldError = new FieldError("mataKuliah","code","Code "+ request.getCode() +" already exist");
+            result.addError(fieldError);
+        }
+
+        if (Boolean.FALSE.equals(service.validName(request))){
+            FieldError fieldError = new FieldError("mataKuliah","name","name "+ request.getName() +" already exist");
+            result.addError(fieldError);
+        }
+
+        if (result.hasErrors()){
+            view.addObject("mataKuliah", request);
+            return view;
+        }
+
         this.service.save(request);
         return new ModelAndView("redirect:/matakuliah");
     }
@@ -51,7 +74,12 @@ public class MataKuliahController {
     }
 
     @PostMapping("/update")
-    public ModelAndView update(@ModelAttribute MataKuliahModel request){
+    public ModelAndView update(@Valid @ModelAttribute("mataKuliah") MataKuliahModel request, BindingResult result){
+        if (result.hasErrors()) {
+            ModelAndView view = new ModelAndView("matakuliah/edit.html");
+            view.addObject("mataKuliah", request);
+            return view;
+        }
         this.service.update(request.getId(), request);
         return new ModelAndView("redirect:/matakuliah");
     }

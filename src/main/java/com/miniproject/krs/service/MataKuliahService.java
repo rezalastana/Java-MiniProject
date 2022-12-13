@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface MataKuliahService  {
     public List<MataKuliahModel> getAll();
+    public Boolean validCode(MataKuliahModel model);
+    public Boolean validName(MataKuliahModel model);
     public MataKuliahModel getById(String id);
     public Optional<MataKuliahModel> save(MataKuliahModel data);
     public Optional<MataKuliahModel> update(String id, MataKuliahModel data);

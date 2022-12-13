@@ -31,7 +31,7 @@ public class MahasiswaServiceImpl implements MahasiswaService {
         if (result.isEmpty()) {
             Collections.emptyList();
         }
-        // conver dari List<SiswaEntity> => List<SiswaModel>
+        // convert dari List<>
         return result.stream().map(MahasiswaModel::new).collect(Collectors.toList());
     }
 
@@ -42,7 +42,7 @@ public class MahasiswaServiceImpl implements MahasiswaService {
             return new MahasiswaModel();
         }
         Optional<MahasiswaEntity> result = repository.findById(id);
-        // convert dari SiswaEntity => SiswaModel
+        // convert dari Entity => Model
         return result.map(MahasiswaModel::new).orElseGet(MahasiswaModel::new);
     }
 
@@ -51,6 +51,19 @@ public class MahasiswaServiceImpl implements MahasiswaService {
         if (data == null) {
             return Optional.empty();
         }
+
+        //checkCode
+        List<MahasiswaEntity> checkNim = this.repository.findByNim(data.getNim());
+        if (!checkNim.isEmpty()) {
+            return Optional.empty();
+        }
+
+        //checkName
+        List<MahasiswaEntity> checkName = this.repository.findByName(data.getName());
+        if (!checkName.isEmpty()) {
+            return Optional.empty();
+        }
+
         MahasiswaEntity result = new MahasiswaEntity(data);
         try {
             // proses simpan data
@@ -97,7 +110,8 @@ public class MahasiswaServiceImpl implements MahasiswaService {
 //        }
 //        return new MahasiswaModel();
 
-        //check tabel dengan id
+        //check id
+
         Optional<MahasiswaEntity> result = this.repository.findById(id);
         if (result.isEmpty()) {
             return Optional.empty();

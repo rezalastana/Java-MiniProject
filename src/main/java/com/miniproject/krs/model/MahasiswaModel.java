@@ -45,7 +45,7 @@ public class MahasiswaModel {
     @NotEmpty
     private String jurusanId;
 //    private JurusanModel jurusan; tanpa memanggil jurusanmodel
-    private String jurusanName; //langsung pangiil JurusanName
+    private String jurusanName; //langsung panggil JurusanName
 
     //constructor
     public MahasiswaModel() {
@@ -61,8 +61,9 @@ public class MahasiswaModel {
         }
     }
 
-    public MahasiswaModel(String id, String nim,  String name, String jk, String alamat){
+    public MahasiswaModel(String id, String nim, String name, String jk, String alamat){
         this.id = id;
+        this.nim = nim;
         this.name = name;
         this.jk = jk;
         this.alamat = alamat;

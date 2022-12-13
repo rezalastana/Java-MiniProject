@@ -1,5 +1,5 @@
 <!-- Card Start  -->
-<form th:action="@{~/gedung/save}" method="post">
+<form th:action="@{~/gedung/save}" method="post" id="form-input" th:object="${gedung}">
     <div class="card">
         <div class="card-header bg-primary">
             <h3 class="card-title">Add New gedung</h3>
@@ -7,25 +7,29 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label>code</label>
-                <input th:type="text" name="code" id="code" class="form-control" >
+                <label for="code">code</label>
+                <input id="code" type="text" th:field="*{code}" th:class="${#fields.hasErrors('code')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('code')}" class="error invalid-feedback" th:errors="*{code}"></span>
             </div>
 
             <div class="form-group">
-                <label>Nama Gedung</label>
-                <input th:type="text" name="name" class="form-control">
+                <label for="name">Nama Gedung</label>
+                <input id="name" type="text" th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('name')}" class="error invalid-feedback" th:errors="*{name}"></span>
             </div>
 
             <div class="form-group">
-                <label>Jumlah Lantai</label>
-                <input th:type="text" name="jmlLantai" class="form-control">
+                <label for="jmlLantai">Jumlah Lantai</label>
+                <input id="jmlLantai" type="text" th:field="*{jmlLantai}" th:class="${#fields.hasErrors('jmlLantai')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('jmlLantai')}" class="error invalid-feedback" th:errors="*{jmlLantai}"></span>
             </div>
 
         </div>
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-success">Submit</button>
-        </div>
+            <div class="modal-footer justify-content-between">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
     </div>
 </form>
 
