@@ -15,34 +15,27 @@ import java.time.LocalDate;
 public class MahasiswaModel {
     private String id;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "data tidak boleh kosong")
     private String nim;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "data tidak boleh kosong")
     private String name;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "data tidak boleh kosong")
     private String jk;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "data tidak boleh kosong")
     private String alamat;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "data tidak boleh kosong")
     private String tmptLahir;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate tglLahir;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "data tidak boleh kosong")
     private String agama;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "data tidak boleh kosong")
     private String jurusanId;
 //    private JurusanModel jurusan; tanpa memanggil jurusanmodel
     private String jurusanName; //langsung panggil JurusanName

@@ -62,6 +62,7 @@ public class JurusanController {
 
         if(result.hasErrors()){
             view.addObject("jurusan", request);
+            view.addObject("fakultasList",fakultasService.getAll());
             return view;
         }
 

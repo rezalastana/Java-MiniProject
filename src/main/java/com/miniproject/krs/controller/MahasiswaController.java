@@ -1,11 +1,8 @@
 package com.miniproject.krs.controller;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 import com.miniproject.krs.entity.LookupEntity;
 import com.miniproject.krs.model.JurusanModel;
@@ -16,7 +13,6 @@ import com.miniproject.krs.service.MahasiswaService;
 import com.miniproject.krs.util.Constant;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -76,6 +72,12 @@ public class MahasiswaController {
         }
 
         if(result.hasErrors()){
+            view.addObject("genderList", lookupService.getByGroup(Constant.GENDER));
+            view.addObject("agamaList", lookupService.getByGroup(Constant.AGAMA));
+            view.addObject("jurusanList", jurusanService.getAll());
+            // untuk order urut byPosition
+            view.addObject("byPosition", Comparator.comparing(LookupEntity::getPosition));
+
             view.addObject("mahasiswa", request);
             return view;
         }

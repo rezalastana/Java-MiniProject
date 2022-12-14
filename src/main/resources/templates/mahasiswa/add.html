@@ -25,10 +25,9 @@
                 <label for="jk" >Jenis Kelamin</label>
                 <select id="jk" th:field="*{jk}" th:class="${#fields.hasErrors('jk')} ? 'form-control is-invalid': 'form-control'">
                     <option value=""></option>
-                    <option th:each="option: ${#lists.sort(genderList, byPosition)}" th:value="${option.code}" th:text="${option.name}"></option>
+                    <option th:each="option: ${#lists.sort(genderList,byPosition)}" th:value="${option.code}" th:text="${option.name}"></option>
                 </select>
                 <span th:if="${#fields.hasErrors('jk')}" class="error invalid-feedback" th:errors="*{jk}"></span>
-                </select>
             </div>
 
             <div class="form-group">

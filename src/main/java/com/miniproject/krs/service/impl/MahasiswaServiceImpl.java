@@ -26,12 +26,11 @@ public class MahasiswaServiceImpl implements MahasiswaService {
 
     @Override
     public List<MahasiswaModel> getAll() {
-
         List<MahasiswaEntity> result = this.repository.findAll();
-        if (result.isEmpty()) {
+        if(result.isEmpty()){
             Collections.emptyList();
         }
-        // convert dari List<>
+        // conver dari MahasiswaEntity => MahasiswaModel
         return result.stream().map(MahasiswaModel::new).collect(Collectors.toList());
     }
 
