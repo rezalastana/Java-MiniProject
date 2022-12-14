@@ -58,6 +58,7 @@ public class RuangController {
             result.addError(fieldError);
         }
         if (result.hasErrors()){
+            view.addObject("gedungList", gedungService.getAll());
             view.addObject("ruang", request);
             return view;
         }

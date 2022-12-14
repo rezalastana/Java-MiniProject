@@ -14,16 +14,13 @@ import org.springframework.beans.BeanUtils;
 public class JurusanModel {
     private String id;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String code;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String name;
-    
-    @NotBlank
-    @NotEmpty
+
+    @NotBlank(message = "Data tidak boleh kosong")
     private String fakultasId;
     private String fakultasName;
 

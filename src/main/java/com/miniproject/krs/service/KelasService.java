@@ -10,7 +10,6 @@ public interface KelasService {
     public List<KelasModel> getAll();
     public KelasModel getById(String id);
     public Boolean validCode(KelasModel model);
-    public Boolean validHari(KelasModel model);
     public Optional<KelasModel> save(KelasModel data);
     public Optional<KelasModel> update(String id, KelasModel data);
     public Optional<KelasModel> delete(String id);

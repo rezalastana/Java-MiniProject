@@ -54,27 +54,31 @@ public class KelasController {
         // untuk order urut byPosition
         view.addObject("byPosition", Comparator.comparing(LookupEntity::getPosition));
 
-        List<RuangModel> ruang = ruangService.getAll();
-        List<MataKuliahModel> mataKuliah = mataKuliahService.getAll();
-        List<DosenModel> dosen = dosenService.getAll();
-        view.addObject("ruangList", ruang);
-        view.addObject("mataKuliahList", mataKuliah);
-        view.addObject("dosenList", dosen);
+        view.addObject("ruangList", ruangService.getAll());
+        view.addObject("mataKuliahList", mataKuliahService.getAll());
+        view.addObject("dosenList", dosenService.getAll());
         view.addObject("kelas", new KelasModel());
         return view;
     }
 
     @PostMapping("/save")
     public ModelAndView save(@Valid @ModelAttribute("kelas") KelasModel request, BindingResult result){
-        ModelAndView view = new ModelAndView("ruang:/add.html");
+        ModelAndView view = new ModelAndView("kelas/add.html");
         if (Boolean.FALSE.equals(kelasService.validCode(request))){
             FieldError fieldError = new FieldError("kelas","code","Code "+ request.getCode() +" already exist");
             result.addError(fieldError);
         }
 
-        if (Boolean.FALSE.equals(kelasService.validHari(request))) {
-            ObjectError objectError = new FieldError("kelas","hari","Hari "+ request.getHari() +" already exist");
-            result.addError(objectError);
+        if (result.hasErrors()){
+            view.addObject("hariList", lookupService.getByGroup("HARI"));
+            view.addObject("onlineList", lookupService.getByGroup("ONLINE"));
+            // untuk order urut byPosition
+            view.addObject("byPosition", Comparator.comparing(LookupEntity::getPosition));
+            view.addObject("ruangList", ruangService.getAll());
+            view.addObject("mataKuliahList", mataKuliahService.getAll());
+            view.addObject("dosenList", dosenService.getAll());
+            view.addObject("kelas", request);
+            return view;
         }
 
 

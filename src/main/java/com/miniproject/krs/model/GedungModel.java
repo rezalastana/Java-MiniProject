@@ -14,14 +14,11 @@ import java.util.List;
 @Setter
 public class GedungModel {
     private String id;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String code;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String name;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String jmlLantai;
     private List<RuangModel> ruangList;
 

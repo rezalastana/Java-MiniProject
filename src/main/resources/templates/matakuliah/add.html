@@ -20,7 +20,7 @@
 
             <div class="form-group">
                 <label for="sks">SKS</label>
-                <input id="sks" type="number" th:field="*{sks}" th:class="${#fields.hasErrors('sks')} ? 'form-control is-invalid': 'form-control'">
+                <input id="sks" type="text" th:field="*{sks}" th:class="${#fields.hasErrors('sks')} ? 'form-control is-invalid': 'form-control'">
                 <span th:if="${#fields.hasErrors('sks')}" class="error invalid-feedback" th:errors="*{sks}"></span>
             </div>
 

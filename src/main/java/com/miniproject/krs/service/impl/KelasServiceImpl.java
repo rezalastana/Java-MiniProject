@@ -51,13 +51,6 @@ public class KelasServiceImpl implements KelasService {
     }
 
     @Override
-    public Boolean validHari(KelasModel model) {
-        //check name
-        List<KelasEntity> checkHari = this.repo.findByHari(model.getHari());
-        return checkHari.isEmpty();
-    }
-
-    @Override
     public Optional<KelasModel> save(KelasModel data) {
         if (data == null){
             return Optional.empty();
@@ -70,13 +63,7 @@ public class KelasServiceImpl implements KelasService {
             return Optional.empty();
         }
 
-        //checkName
-        List<KelasEntity> checkHari = this.repo.findByHari(data.getHari());
-        if (!checkHari.isEmpty()) {
-            return Optional.empty();
-        }
-
-        List<KelasEntity> check01 = this.repo.validation2(
+        List<KelasEntity> check01 = this.repo.validation1(
                 data.getHari(),
                 data.getRuangId(),
                 data.getDosenId(),
@@ -84,7 +71,7 @@ public class KelasServiceImpl implements KelasService {
                 data.getJam_selesai()
         );
 
-        List<KelasEntity> check02 = this.repo.validation6(
+        List<KelasEntity> check02 = this.repo.validation3(
                 data.getRuangId(),
                 data.getHari(),
                 data.getJam_mulai(),
@@ -109,7 +96,7 @@ public class KelasServiceImpl implements KelasService {
                 data.getDosenId()
         );
 
-        if (check01.size()>0){
+        if (check01.size()>0 || check02.size()>0){
             return Optional.empty();
         }
 

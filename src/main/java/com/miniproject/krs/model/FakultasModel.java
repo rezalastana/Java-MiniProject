@@ -16,14 +16,11 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 public class FakultasModel {
     private String id;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String code;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String name;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String alamat;
     private List<JurusanModel> jurusanList;
 

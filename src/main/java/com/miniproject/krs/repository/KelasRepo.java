@@ -13,7 +13,6 @@ import java.util.List;
 public interface KelasRepo extends JpaRepository<KelasEntity, String> {
     //validasi code and name
     List<KelasEntity> findByCode(String code);
-    List<KelasEntity> findByHari(String hari);
 
 
     //validasi dimana hari, ruang, dosen sudah ada dan jam mulai>= dan jam_selesai<=

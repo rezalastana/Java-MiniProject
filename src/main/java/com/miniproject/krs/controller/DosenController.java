@@ -55,16 +55,20 @@ public class DosenController {
     public ModelAndView save(@Valid @ModelAttribute("dosen") DosenModel request, BindingResult result){
         ModelAndView view = new ModelAndView("dosen/add.html");
         if (Boolean.FALSE.equals(service.validNip(request))){
-            FieldError fieldError = new FieldError("fakultas","nip","NIP "+ request.getNip() +" already exist");
+            FieldError fieldError = new FieldError("dosen","nip","NIP "+ request.getNip() +" already exist");
             result.addError(fieldError);
         }
 
         if (Boolean.FALSE.equals(service.validName(request))){
-            FieldError fieldError= new FieldError("fakultas","name","Name "+ request.getName() +" already exist");
+            FieldError fieldError= new FieldError("dosen","name","Name "+ request.getName() +" already exist");
             result.addError(fieldError);
         }
 
         if (result.hasErrors()){
+            view.addObject("genderList", lookupService.getByGroup(Constant.GENDER));
+            //order position
+            view.addObject("byPosition", Comparator.comparing(LookupEntity::getPosition));
+
             view.addObject("dosen", request);
             return view;
         }

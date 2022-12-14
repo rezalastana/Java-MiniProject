@@ -14,24 +14,19 @@ import java.time.LocalDateTime;
 @Setter
 public class DosenModel {
     private String id;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String nip;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String name;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String jk;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String alamat;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String gelar;
 
     //constructor

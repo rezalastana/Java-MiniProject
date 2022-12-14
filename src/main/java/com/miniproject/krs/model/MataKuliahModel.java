@@ -13,16 +13,13 @@ import javax.validation.constraints.NotEmpty;
 public class MataKuliahModel {
     public String id;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     public String code;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     public String name;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     public String sks;
     
     //constructor

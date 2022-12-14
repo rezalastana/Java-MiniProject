@@ -98,26 +98,24 @@ public class KelasEntity {
 
         if (model.getRuangId() != null) {
             RuangEntity ruangEntity = new RuangEntity();
-            ruangEntity.setId(model.getRuangName());
+            ruangEntity.setId(model.getRuangId());
             this.ruang = ruangEntity;
         }
 
         if (model.getMataKuliahId() != null){
             MataKuliahEntity mataKuliahEntity = new MataKuliahEntity();
-            mataKuliahEntity.setId(model.getMataKuliahName());
+            mataKuliahEntity.setId(model.getMataKuliahId());
             this.mataKuliah = mataKuliahEntity;
         }
 
         if (model.getDosenId() != null) {
             DosenEntity dosenEntity = new DosenEntity();
-            dosenEntity.setId(model.getDosenName());
+            dosenEntity.setId(model.getDosenId());
             this.dosen = dosenEntity;
         }
 
         this.createdAt = LocalDateTime.now();
         this.createdBy = "SYSTEM";
-        this.updatedAt = LocalDateTime.now();
-        this.updatedBy = "SYSTEM";
 
     }
 

@@ -13,17 +13,16 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
 @Setter
 public class KelasModel {
     private String id;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String code;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String hari;
 
     @Temporal(TemporalType.TIME)
@@ -32,27 +31,23 @@ public class KelasModel {
     @Temporal(TemporalType.TIME)
     @DateTimeFormat(pattern = "HH:mm")
     private Date jam_selesai;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String ruangId;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String mataKuliahId;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String dosenId;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String status;
     @Min(value = 1, message = "The value must be not zero")
+    @NotNull(message = "Data tidak boleh kosong")
     private Integer tahunAjaran;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String semester;
     @Min(value = 1, message = "The value must be not zero")
+    @NotNull(message = "Data tidak boleh kosong")
     private Integer quota;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Data tidak boleh kosong")
     private String bisaOnline;
 
     private String ruangName;
