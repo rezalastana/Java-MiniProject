@@ -1,17 +1,12 @@
 package com.miniproject.krs.controller;
 
 import com.miniproject.krs.entity.LookupEntity;
-import com.miniproject.krs.model.DosenModel;
-import com.miniproject.krs.model.KelasModel;
-import com.miniproject.krs.model.MataKuliahModel;
-import com.miniproject.krs.model.RuangModel;
+import com.miniproject.krs.model.*;
 import com.miniproject.krs.service.*;
-import com.miniproject.krs.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,6 +36,7 @@ public class KelasController {
     public ModelAndView index(){
         ModelAndView view = new ModelAndView("kelas/index.html");
         List<KelasModel> result = kelasService.getAll();
+
         view.addObject("dataList", result);
         return view;
     }
@@ -92,25 +88,40 @@ public class KelasController {
         if (kelas == null){
             return new ModelAndView("redirect:/kelas");
         }
-        List<RuangModel> ruang = ruangService.getAll();
-        List<MataKuliahModel> matakuliah = mataKuliahService.getAll();
-        List<DosenModel> dosen = dosenService.getAll();
 
         ModelAndView view = new ModelAndView("kelas/edit.html");
-        view.addObject("data", kelas);
-        view.addObject("ruangList", ruang);
-        view.addObject("matakuliahList", matakuliah);
-        view.addObject("dosenList", dosen);
+
+        view.addObject("hariList", lookupService.getByGroup("HARI"));
+        view.addObject("onlineList", lookupService.getByGroup("ONLINE"));
+        // untuk order urut byPosition
+        view.addObject("byPosition", Comparator.comparing(LookupEntity::getPosition));
+
+        view.addObject("ruangList", ruangService.getAll());
+        view.addObject("mataKuliahList", mataKuliahService.getAll());
+        view.addObject("dosenList", dosenService.getAll());
+        view.addObject("kelas", kelas);
 
         return view;
     }
 
     @PostMapping("/update")
+    public ModelAndView update(@Valid @ModelAttribute("kelas") KelasModel request, BindingResult result){
+        if (result.hasErrors()) {
+            ModelAndView view = new ModelAndView("kelas/edit.html");
+            view.addObject("kelas", request);
+            return view;
+        }
+        this.kelasService.update(request.getId(), request);
+        return new ModelAndView("redirect:/kelas");
+    }
+
+    @GetMapping("/detail/{id}")
     public ModelAndView detail(@PathVariable("id") String id){
         KelasModel kelas = kelasService.getById(id);
         if (kelas == null){
             return new ModelAndView("redirect:/kelas");
         }
+
         ModelAndView view = new ModelAndView("kelas/detail.html");
         view.addObject("data", kelas);
         return view;

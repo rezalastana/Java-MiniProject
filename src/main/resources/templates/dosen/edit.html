@@ -1,11 +1,14 @@
 <!-- Card Start  -->
 <form th:action="@{~/dosen/update}" method="post" id="form-input" th:object="${dosen}">
 
-    <div class="card">
-        <div class="card-header bg-primary">
-            <h3 class="card-title">Edit New Dosen</h3>
-        </div>
+    <div class="modal-header bg-warning">
+        <h3 class="modal-title">Dosen Edit</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 
+    <div class="modal-body row">
         <div class="card-body">
             <!-- hidden id-->
             <input type="hidden" name="id" th:field="*{id}">

@@ -77,7 +77,7 @@ public class RuangController {
         List<GedungModel> gedung = gedungService.getAll();
 
         ModelAndView view = new ModelAndView("ruang/edit.html");
-        view.addObject("data", ruang);
+        view.addObject("ruang", ruang);
         view.addObject("gedungList", gedung);
         return view;
     }

@@ -69,7 +69,7 @@ public class MataKuliahController {
         }
 
         ModelAndView view = new ModelAndView("matakuliah/edit.html");
-        view.addObject("data", matakuliah);
+        view.addObject("mataKuliah", matakuliah);
         return view;
     }
 

@@ -2,7 +2,6 @@ package com.miniproject.krs.service.impl;
 
 import com.miniproject.krs.entity.*;
 import com.miniproject.krs.model.KelasModel;
-import com.miniproject.krs.model.RuangModel;
 import com.miniproject.krs.repository.KelasRepo;
 import com.miniproject.krs.service.KelasService;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +62,7 @@ public class KelasServiceImpl implements KelasService {
             return Optional.empty();
         }
 
-        List<KelasEntity> check01 = this.repo.validation1(
+        List<KelasEntity> check01 = this.repo.validation2(
                 data.getHari(),
                 data.getRuangId(),
                 data.getDosenId(),
@@ -96,7 +95,7 @@ public class KelasServiceImpl implements KelasService {
                 data.getDosenId()
         );
 
-        if (check01.size()>0 || check02.size()>0){
+        if (check01.size()>0){
             return Optional.empty();
         }
 

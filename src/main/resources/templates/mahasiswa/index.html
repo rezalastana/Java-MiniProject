@@ -67,7 +67,7 @@
                 <td th:text="${data.name}"></td>
                 <td th:text="${data.jk}"></td>
                 <td th:text="${data.alamat}"></td>
-                <td th:text="${data.tmptLahir} + ${#temporals.format(data.tglLahir, 'dd-MM-yyyy')}"></td>
+                <td th:text="${data.tmptLahir}+' / '+${#temporals.format(data.tglLahir, 'dd-MM-yyyy')}"></td>
                 <td th:text="${data.agama}"></td>
                 <td th:text="${data.jurusanName}"></td>
                 <td>

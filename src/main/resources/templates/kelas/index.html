@@ -83,7 +83,7 @@
                 </a> &nbsp;
                 <a th:href="@{~/kelas/edit/{id}(id=${data.id})}" class="btn btn-s btn-warning btn-edit">
                     <i class="fas fa-edit"></i>
-                </a> &nbsp;
+                </a> &nbsp;&nbsp;
                 <form th:action="@{~/kelas/delete}" method="post" class="d-inline" onsubmit="return confirm('Yakin hapus data ?')">
                     <input type="hidden" name="id" th:value="${data.id}">
                     <button type="submit" class="btn btn-s btn-danger">

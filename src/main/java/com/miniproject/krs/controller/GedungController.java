@@ -68,7 +68,7 @@ public class GedungController {
             return new ModelAndView("redirect:/gedung");
         }
         ModelAndView view = new ModelAndView("gedung/edit.html");
-        view.addObject("data", gedung);
+        view.addObject("gedung", gedung);
         return view;
     }
 

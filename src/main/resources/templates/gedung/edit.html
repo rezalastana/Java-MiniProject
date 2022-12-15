@@ -1,31 +1,43 @@
 <!-- Card Start  -->
-<form th:action="@{~/gedung/update}" method="post">
-    <input type="hidden" name="id" th:value="${data.id}">
-    <div class="card">
-        <div class="card-header bg-warning">
-            <h3 class="card-title">Edit Gedung</h3>
-        </div>
+<form th:action="@{~/gedung/update}" method="post" id="form-input" th:object="${gedung}">
 
+    <div class="modal-header bg-warning">
+        <h3 class="modal-title">Gedung Detail</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body row">
         <div class="card-body">
+
+            <input type="hidden" id="" th:field="*{id}">
+
             <div class="form-group">
-                <label>Code</label>
-                <input type="text" name="code" class="form-control" th:value="${data.code}">
+                <label for="code">Code</label>
+                <input id="code" type="text" th:field="*{code}" th:class="${#fields.hasErrors('code')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('code')}" class="error invalid-feedback" th:errors="*{code}"></span>
             </div>
 
             <div class="form-group">
-                <label >Nama Gedung</label>
-                <input th:type="text" name="name" class="form-control" th:value="${data.name}">
+                <label for="name">Nama Gedung</label>
+                <input id="name" type="text" th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('name')}" class="error invalid-feedback" th:errors="*{name}"></span>
             </div>
 
             <div class="form-group">
                 <label >Jumlah Lantai</label>
-                <input th:type="text" name="jmlLantai" class="form-control" th:value="${data.jmlLantai}">
+                <input id="jmlLantai" type="text" th:field="*{jmlLantai}" th:class="${#fields.hasErrors('jmlLantai')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('jmlLantai')}" class="error invalid-feedback" th:errors="*{jmlLantai}"></span>
             </div>
-        </div>
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-success">Update</button>
         </div>
     </div>
+
+    <div class="modal-footer justify-content-between">
+        <button type="submit" class="btn btn-success">Update</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+
 </form>
 <!-- Card End  -->

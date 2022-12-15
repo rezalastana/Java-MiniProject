@@ -92,11 +92,15 @@ public class MahasiswaController {
         if(mahasiswa==null){
             return new ModelAndView("redirect:/mahasiswa");
         }
-        List<JurusanModel> jurusan = jurusanService.getAll();
         ModelAndView view = new ModelAndView("mahasiswa/edit.html");
 
+        view.addObject("genderList", lookupService.getByGroup(Constant.GENDER));
+        view.addObject("agamaList", lookupService.getByGroup(Constant.AGAMA));
+        view.addObject("jurusanList", jurusanService.getAll());
+        // untuk order urut byPosition
+        view.addObject("byPosition", Comparator.comparing(LookupEntity::getPosition));
+
         view.addObject("mahasiswa", mahasiswa);
-        view.addObject("jurusanList", jurusan);
         return view;
     }
 

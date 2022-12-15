@@ -77,11 +77,11 @@ public class JurusanController {
             return new ModelAndView("redirect:/jurusan");
         }
 
-        List<FakultasModel> fakultas = fakultasService.getAll();//abil data fakultas
+//        List<FakultasModel> fakultas = fakultasService.getAll();//abil data fakultas
 
         ModelAndView view = new ModelAndView("jurusan/edit.html");
         view.addObject("jurusan", jurusan);
-        view.addObject("fakultasList", fakultas);
+        view.addObject("fakultasList", fakultasService.getAll());
         return view;
     }
 

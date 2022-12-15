@@ -1,39 +1,50 @@
 <!-- Card Start  -->
-<form th:action="@{~/ruang/update}" method="post">
-    <input type="hidden" name="id" th:value="${data.id}">
-    <div class="card">
-        <div class="card-header bg-warning">
-            <h3 class="card-title">Edit Ruang</h3>
-        </div>
+<form th:action="@{~/ruang/update}" method="post" id="form-input" th:object="${ruang}">
+    <div class="modal-header bg-warning">
+        <h3 class="modal-title">Ruang Edit</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 
-        <div class="card-body">
+    <div class="modal-body row">
+        <div class="col-md-12 col-lg-12">
+            <!-- hidde id -->
+            <input type="hidden" id="id" th:field="*{id}">
+
             <div class="form-group">
-            <label>Code</label>
-                <input id="code" type="text" name="code" class="form-control" th:value="${data.code}" >
+            <label for="code">Code</label>
+                <input id="code" type="text" th:field="*{code}" th:class="${#fields.hasErrors('code')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('code')}" class="error invalid-feedback" th:errors="*{code}"></span>
             </div>
 
             <div class="form-group">
-                <label>Nama Ruang</label>
-                <input id="name" type="text" name="name" class="form-control" th:value="${data.name}" >
+                <label for="name">Nama Ruang</label>
+                <input id="name" type="text" th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('name')}" class="error invalid-feedback" th:errors="*{name}"></span>
             </div>
 
             <div class="form-group">
-                <label>Gedung</label>
-                <select name="gedung.id" class="form-control">
+                <label for="gedungId">Gedung</label>
+                <select id="gedungId" th:field="*{gedungId}" th:class="${#fields.hasErrors('gedungId')} ? 'form-control is-invalid': 'form-control'">
                     <option value=""></option>
-                    <option th:each="gedung: ${gedungList}" th:value="${gedung.id}" th:text="${gedung.name}" th:selected="${gedung.id==data.gedungId}"></option>
+                    <option th:each="option: ${gedungList}" th:value="${option.id}" th:text="${option.name}" th:selected="${option.id == ruang.gedungId}"></option>
                 </select>
+                <span th:if="${#fields.hasErrors('gedungId')}" class="error invalid-feedback" th:errors="*{gedungId}"></span>
             </div>
 
             <div class="form-group">
-                <label>LantaiKe</label>
-                <input id="lantaiKe" type="text" name="lantaiKe" class="form-control" th:value="${data.lantaiKe}" >
+                <label for="lantaiKe">LantaiKe</label>
+                <input id="lantaiKe" type="text" th:field="*{lantaiKe}" th:class="${#fields.hasErrors('lantaiKe')} ? 'form-control is-invalid': 'form-control'">
+                <span th:if="${#fields.hasErrors('lantaiKe')}" class="error invalid-feedback" th:errors="*{lantaiKe}"></span>
             </div>
         </div>
+    </div>
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-success">Update</button>
-        </div>
-        </div>
+    <div class="modal-footer justify-content-between">
+        <button type="submit" class="btn btn-success">Update</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+
 </form>
 <!-- Card End  -->

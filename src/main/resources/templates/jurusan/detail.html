@@ -1,12 +1,16 @@
 <!-- Card Start  -->
 <form action="#" method="post">
     <input type="hidden" name="id" th:value="${data.id}">
-        <div class="card">
-            <div class="card-header bg-info">
-                <h3 class="card-title">Detail Jurusan</h3>
-            </div>
+    <div class="modal-header bg-info">
+        <h3 class="modal-title">Jurusan Detail</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 
-            <div class="card-body">
+    <div class="modal-body row">
+        <div class="card-body">
+
             <div class="form-group">
                 <label>Code</label>
                 <input id="code" type="text" name="code" class="form-control" th:value="${data.code}" readonly="readonly" >
@@ -21,7 +25,8 @@
                 <label>Nama Fakultas</label>
                 <input type="text" class="form-control" th:value="${data.fakultasName}" readonly="readonly" >
             </div>
-            </div>
+
         </div>
+    </div>
 </form>
 <!-- Card End  -->
