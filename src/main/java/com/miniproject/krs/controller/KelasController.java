@@ -82,7 +82,7 @@ public class KelasController {
         return new ModelAndView("redirect:/kelas");
     }
 
-    @GetMapping("/edit{id}")
+    @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") String id){
         KelasModel kelas = this.kelasService.getById(id);
         if (kelas == null){

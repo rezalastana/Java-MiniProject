@@ -116,13 +116,16 @@ public class KelasServiceImpl implements KelasService {
         }
 
         KelasEntity request = result.get();
-        request.setCode(data.getCode());
+        request.setCode(request.getCode());
         request.setHari(data.getHari());
         request.setJam_mulai(data.getJam_mulai());
         request.setJam_selesai(data.getJam_selesai());
+
         RuangEntity ruang = new RuangEntity(data.getRuangId());
         MataKuliahEntity mataKuliah = new MataKuliahEntity(data.getMataKuliahId());
         DosenEntity dosen = new DosenEntity(data.getDosenId());
+//        request.setDosen(new DosenEntity(request.getDosen().getId()));
+
         request.setStatus(data.getStatus());
         request.setTahunAjaran(data.getTahunAjaran());
         request.setSemester(data.getSemester());
